@@ -2,6 +2,7 @@
 // Created by hsingh9 on 08/03/2019.
 //
 #include <iostream>
+#include <fstream>
 #include "CubicSpline.hpp"
 using namespace std;
 using namespace Eigen;
@@ -41,23 +42,28 @@ VectorXd CubicSpline::findCoefficients (VectorXd fValue)
     return cValue;
 }
 
-VectorXd CubicSpline::findSplineValues (VectorXd coeff, VectorXd nPoints)
+ArrayXXd CubicSpline::findSplineValues (VectorXd coeff, VectorXd nPoints)
 {
     const int n=nPoints.size() - 1;
     const double h = (nPoints(n)-nPoints(0))/(double)n;
-    VectorXd uniSpace=VectorXd::LinSpaced(20*n+1,0,1);
-    VectorXd splineValues=VectorXd::Zero(uniSpace.size());
-    for (int i = 0; i < 2; ++i)
+    int uSpacePointsSize=20*n+1;
+    ArrayXXd uniformValues(uSpacePointsSize,4);
+    uniformValues.col(0)=ArrayXd::LinSpaced(uSpacePointsSize,0,1);
+    uniformValues.col(1)=6*M_PI*uniformValues.col(0);
+    uniformValues.col(2)=uniformValues.col(1).cos();
+    uniformValues.col(3)=ArrayXd::Zero(uSpacePointsSize);
+    for (int i = 0; i < uSpacePointsSize; ++i)
     {
-        cout<<uniSpace[i]<<endl;
-        VectorXd vXdBi=computeBi(nPoints,uniSpace[i]);
+        cout<<uniformValues(i,0)<<endl;
+        VectorXd vXdBi=computeBi(nPoints,uniformValues(i,0));
 //        cout<<"vXdBi size: "<<vXdBi.size()<<endl;
 //        cout<<"coeff size: "<<coeff.size()<<endl;
         double q3=vXdBi.dot(coeff);
         cout<<"q3: "<<q3<<endl;
-        splineValues[i]=q3;
+        uniformValues(i,3)=q3;
     }
-    return splineValues;
+
+    return uniformValues;
 }
 
 double CubicSpline::getBx (double xVal)
@@ -87,9 +93,9 @@ double CubicSpline::getBx (double xVal)
 VectorXd CubicSpline::computeBi (VectorXd nPoints, double x)
 {
     int n=nPoints.size()-1;
-    double a=nPoints[0],b=nPoints[1];
+    double a=nPoints[0],b=nPoints[n];
     double h=(nPoints[n-1]-nPoints[0])/(double)(n-1);
-    cout<<"n = "<<n<<", h= "<<h<<endl;
+    cout<<"n = "<<n<<", h = "<<h<<", a ="<<a<<", b ="<< b <<endl;
     VectorXd Bi=VectorXd::Zero(n+3);
     for (int i = 0; i < n + 3; ++i)
     {
@@ -106,9 +112,17 @@ VectorXd CubicSpline::computeBi (VectorXd nPoints, double x)
         {
             tempB=(x-nPoints[i-1])/h;
         }
-        cout<<"B("<<i<<", "<<x<<"): "<< tempB<<endl;
-        cout<<"Bx("<<i<<", "<<x<<"): "<< getBx(tempB)<<endl;
         Bi[i]=getBx(tempB);
+        cout<<"B("<<i<<", "<<x<<"): "<< tempB<<" => Bx("<<i<<", "<<x<<"): "<< Bi[i]<<endl;
     }
     return Bi;
+}
+
+void CubicSpline::writeToFile (string name, ArrayXXd uniEvalPoints)
+{
+    ofstream oFileStream;
+    oFileStream.open(name.c_str());
+    assert(oFileStream.is_open());
+    oFileStream << uniEvalPoints <<endl;
+    oFileStream.close();
 }

@@ -9,7 +9,7 @@ int main ()
 {
     std::cout << "Hello, World!" << std::endl;
 
-    const int n=128;
+    const int n=8;
     const double a=0,b=1;
     VectorXd nodalPoints=VectorXd::LinSpaced(n+1,a,b);
     VectorXd fValue(n+1);
@@ -24,6 +24,8 @@ int main ()
     CubicSpline cs;
     VectorXd coefficents=cs.findCoefficients(fValue);
     cout<<coefficents<<endl;
-    cs.findSplineValues(coefficents,nodalPoints);
+    ArrayXXd uValues=cs.findSplineValues(coefficents,nodalPoints);
+    //cout<<uValues<<endl;
+    cs.writeToFile("1c.8.txt",uValues);
     return 0;
 }
