@@ -5,6 +5,7 @@
 #ifndef COURSEWORK1_CUBICSPLINE_HPP
 #define COURSEWORK1_CUBICSPLINE_HPP
 #include <iostream>
+#include <vector>
 #include <Dense>
 
 using namespace Eigen;
@@ -16,8 +17,9 @@ class CubicSpline
 public:
     VectorXd findCoefficients(VectorXd fValue);
     ArrayXXd findSplineValues (VectorXd coeff, VectorXd nPoints);
-    void writeToFile(string name, ArrayXXd uniEvalPoints );
-private:
+    void writeToFile (const string fNamePrefix, ArrayXXd uniEvalPoints, const int k, vector<string> colNames);
+
+protected:
     double getBx (double xVal);
     VectorXd computeBi(VectorXd nPoints, double x);
 

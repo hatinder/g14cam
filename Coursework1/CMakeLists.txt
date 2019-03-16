@@ -5,4 +5,4 @@ include_directories(../../Eigen)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Coursework1 main.cpp CubicSpline.cpp CubicSpline.hpp)
+add_executable(Coursework1 main.cpp CubicSpline.cpp CubicSpline.hpp CubicSplinePeriodic.cpp CubicSplinePeriodic.hpp)
