@@ -12,6 +12,7 @@ using namespace Eigen;
 void runProblem1c();
 void runProblem1f();
 void runProblem2b();
+void runProblem2c();
 
 int main ()
 {
@@ -19,7 +20,8 @@ int main ()
     //runProblem1f();
     //VectorXd test=VectorXd::LinSpaced(9,0,1);
     //cout<<test<<endl;
-    runProblem2b();
+//    runProblem2b();
+    runProblem2c();
     return 0;
 }
 
@@ -152,7 +154,61 @@ void runProblem2b()
         }
     }
     cout<<"All Roots: "<<endl<<roots<<endl;
+}
 
+void runProblem2c()
+{
+    RootFinding rootFinding;
 
-
+    ArrayXXd roots=ArrayXXd::Zero(100,2);
+//    cout<<rootFinding.calculateF(0.1,0.1,0.1)<<endl;
+//    cout<<rootFinding.calculateJ(0.1,0.1,0.1)<<endl;
+    int nRoots=0;
+    double ds=0.05;
+    VectorXd xOld(2);
+    VectorXd unitTangent=VectorXd::Zero(2);
+    xOld(0)=0.05;xOld(1)=2;
+    cout<<"Intial Guess: "<<endl<<xOld<<endl;
+//    cout<<"unitTangent.normalized(): "<<endl<<unitTangent.normalized()<<endl;
+    while (nRoots < roots.rows())
+    {
+        unitTangent=ds*xOld.normalized();
+        cout<<"unitTangent: "<<endl<<unitTangent<<endl;
+        VectorXd xNew=VectorXd::Zero(2);
+        VectorXd xNew2=VectorXd::Zero(2);
+        //double TOL=0.005;
+        double TOL=pow(10,-2);
+        double tolerance=1;
+        int j=0;
+        for (; j < 100 && tolerance > TOL; ++j)
+        {
+            xNew=xOld+unitTangent;
+            cout<<"xOld: "<<endl<<xOld<<endl;
+            cout<<"xNew: "<<endl<<xNew<<endl;
+            VectorXd F=rootFinding.calculateF2C(xNew(0),xNew(1),xOld(0),xOld(1));
+            MatrixXd J=rootFinding.calculateJ2C(xNew(0),xNew(1),xOld(0),xOld(1));
+            cout<<"F(x): "<<endl<<F<<endl;
+            cout<<"Matrix J: "<<endl<<J<<endl;
+            FullPivLU<MatrixXd> JInv(J);
+            VectorXd y=-JInv.solve(F);
+            xNew2=xNew+y;
+            cout<<"xNew2: "<<endl<<xNew2<<endl;
+            //tolerance=(xNew-xOld).lpNorm<2>();
+            tolerance=(xNew2-xNew).squaredNorm();
+            xOld=xNew2;
+        }
+        if(rootFinding.foundNewRoot(xNew2(0),xNew2(1),roots))
+        {
+//            cout<<"xOld: ("<<xOld(0)<<", "<<xOld(1)<<")"<<endl<<"xNew: ("<<xOld(0)<<", "<<xOld(1)<<")"<<endl;
+            cout<<"Iteration: "<<j<<", New Root Found: ("<<xNew2(0)<<", "<<xNew2(1)<<")"<<endl;
+            roots.row(nRoots)=xNew2;
+            nRoots++;
+        }
+        else
+        {
+//            cout<<"Initial Guess: ("<<initialGuess(i,0)<<", "<<initialGuess(i,1)<<", "<<initialGuess(i,2)<<")"<<endl;
+//            cout<<"Iteration: "<<j<<", Not New Root : ("<<xNew(0)<<", "<<xNew(1)<<", "<<xNew(2)<<")"<<endl;
+        }
+    }
+    cout<<"All Roots: "<<endl<<roots<<endl;
 }

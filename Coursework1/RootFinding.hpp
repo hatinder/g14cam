@@ -18,6 +18,9 @@ public:
     VectorXd calculateF(double x, double y, double z);
     MatrixXd calculateJ(double x, double y, double z);
     bool foundNewRoot(double x, double y, double z, ArrayXXd root);
+    VectorXd calculateF2C (double x, double y,double x0, double y0);
+    MatrixXd calculateJ2C (double x, double y,double x0, double y0);
+    bool foundNewRoot(double x, double y, ArrayXXd root);
 
 
 
