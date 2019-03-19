@@ -159,43 +159,45 @@ void runProblem2b()
 void runProblem2c()
 {
     RootFinding rootFinding;
-
+    vector<string> rootColNames={"x", "y"};
     ArrayXXd roots=ArrayXXd::Zero(100,2);
 //    cout<<rootFinding.calculateF(0.1,0.1,0.1)<<endl;
 //    cout<<rootFinding.calculateJ(0.1,0.1,0.1)<<endl;
     int nRoots=0;
     double ds=0.05;
-    VectorXd xOld(2);
-    VectorXd unitTangent=VectorXd::Zero(2);
-    xOld(0)=0.05;xOld(1)=2;
-    cout<<"Intial Guess: "<<endl<<xOld<<endl;
+    VectorXd xInitial(2);
+//    VectorXd unitTangent=VectorXd::Zero(2);
+    xInitial(0)=0.05;xInitial(1)=2;
+    cout<<"Intial Guess: "<<endl<<xInitial<<endl;
 //    cout<<"unitTangent.normalized(): "<<endl<<unitTangent.normalized()<<endl;
     while (nRoots < roots.rows())
     {
-        unitTangent=ds*xOld.normalized();
-        cout<<"unitTangent: "<<endl<<unitTangent<<endl;
+//        unitTangent=ds*xOld.normalized();
+//        cout<<"unitTangent: "<<endl<<unitTangent<<endl;
         VectorXd xNew=VectorXd::Zero(2);
         VectorXd xNew2=VectorXd::Zero(2);
         //double TOL=0.005;
+        xNew=xInitial+ds*xInitial.normalized();
+        cout<<"xInitial: "<<endl<<xInitial<<endl;
         double TOL=pow(10,-2);
         double tolerance=1;
         int j=0;
-        for (; j < 100 && tolerance > TOL; ++j)
+        for (; j < 100 && tolerance > ds; ++j)
         {
-            xNew=xOld+unitTangent;
-            cout<<"xOld: "<<endl<<xOld<<endl;
             cout<<"xNew: "<<endl<<xNew<<endl;
-            VectorXd F=rootFinding.calculateF2C(xNew(0),xNew(1),xOld(0),xOld(1));
-            MatrixXd J=rootFinding.calculateJ2C(xNew(0),xNew(1),xOld(0),xOld(1));
+            VectorXd F=rootFinding.calculateF2C(xNew(0),xNew(1),xInitial(0),xInitial(1),xInitial.lpNorm<2>());
+            MatrixXd J=rootFinding.calculateJ2C(xNew(0),xNew(1),xInitial(0),xInitial(1));
             cout<<"F(x): "<<endl<<F<<endl;
             cout<<"Matrix J: "<<endl<<J<<endl;
             FullPivLU<MatrixXd> JInv(J);
             VectorXd y=-JInv.solve(F);
             xNew2=xNew+y;
             cout<<"xNew2: "<<endl<<xNew2<<endl;
-            //tolerance=(xNew-xOld).lpNorm<2>();
-            tolerance=(xNew2-xNew).squaredNorm();
-            xOld=xNew2;
+            tolerance=(xNew2-xNew).lpNorm<2>();
+            cout<<"tolerance: "<< tolerance<<endl;
+            //tolerance=(xNew2-xNew).squaredNorm();
+            xNew=xNew2;
+
         }
         if(rootFinding.foundNewRoot(xNew2(0),xNew2(1),roots))
         {
@@ -211,4 +213,5 @@ void runProblem2c()
         }
     }
     cout<<"All Roots: "<<endl<<roots<<endl;
+    rootFinding.writeToFile("2C",roots,0,rootColNames);
 }
