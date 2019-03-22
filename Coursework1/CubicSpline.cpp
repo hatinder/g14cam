@@ -57,8 +57,8 @@ ArrayXXd CubicSpline::findSplineValues (VectorXd coeff, VectorXd nPoints)
     {
 //        cout<<uniformValues(i,0)<<endl;
         VectorXd vXdBi=computeBi(nPoints,uniformValues(i,0));
-//        cout<<"vXdBi size: "<<vXdBi.size()<<endl;
-//        cout<<"coeff size: "<<coeff.size()<<endl;
+        cout<<"vXdBi size: "<<vXdBi.size()<<endl;
+        cout<<"coeff size: "<<coeff.size()<<endl;
         double q3=vXdBi.dot(coeff);
 //        cout<<"q3: "<<q3<<endl;
         uniformValues(i,3)=q3;
@@ -97,17 +97,17 @@ VectorXd CubicSpline::computeBi (VectorXd nPoints, double x)
 {
     int n=nPoints.size();
     double a=nPoints[0],b=nPoints[n-1];
-    double h=(nPoints[n-1]-nPoints[0])/(double)(n);
+    double h=(b-a)/(double)(n-1);
     cout<<"n = "<<n<<", h = "<<h<<", a ="<<a<<", b ="<< b <<endl;
-    VectorXd Bi=VectorXd::Zero(n);
-    for (int i = 0; i < n; ++i)
+    VectorXd Bi=VectorXd::Zero(n+2);
+    for (int i = 0; i < n+2; ++i)
     {
         double tempB;
         if(i==0)
         {
             tempB=(x-(a-h))/h;
         }
-        else if(i == n+2)
+        else if(i == n+1)
         {
             tempB=(x-(b+h))/h;
         }
@@ -138,3 +138,27 @@ void CubicSpline::writeToFile (const string fNamePrefix, ArrayXXd uniEvalPoints,
     oFileStream << uniEvalPoints <<endl;
     oFileStream.close();
 }
+
+ArrayXXd CubicSpline::readSpline (const string &filename, int size)
+{
+    ArrayXXd splineData=ArrayXXd::Zero(size,2);
+    ifstream ifs;
+    ifs.open(filename.c_str(), ios_base::in);
+    if (!ifs)
+    {
+        cout << "Cant Open input file: " << filename << endl;
+        exit(1);
+    }
+    string s;
+    int i=0;
+    while(getline(ifs,s))
+    {
+        istringstream iss(s);
+        double a,b;
+        iss >>a>>b;
+        splineData.row(i)<<a,b;
+        i++;
+    }
+    return splineData;
+}
+

@@ -21,9 +21,15 @@ public:
     bool foundNewRoot(double x, double y, double z, ArrayXXd root);
     VectorXd calculateF2C (double x, double y,double x0, double y0,double utSqNorm);
     MatrixXd calculateJ2C (double x, double y,double x0, double y0);
+    VectorXd calculateF2D (VectorXd u,double h, double lambda);
+    MatrixXd calculateJ2D (VectorXd u, double h, double lambda);
+    MatrixXd createFuLambda2E (VectorXd u, double h, double lambda);
+    VectorXd calculateF2E (VectorXd u, double h, double lambda, VectorXd u0, VectorXd tk, double lambdaTilda,
+                           double lambda0,double ds);
+    MatrixXd calculateJ2E (VectorXd u, double h, double lambda, VectorXd tk, double lambdaTilda);
+    VectorXd findInitialU (double lambda, int n);
     bool foundNewRoot(double x, double y, ArrayXXd root);
     void writeToFile (const string fNamePrefix, ArrayXXd roots, const int k, vector<string> colNames);
-
 
 
 };

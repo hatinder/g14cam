@@ -10,18 +10,24 @@ using namespace std;
 using namespace Eigen;
 
 void runProblem1c();
-void runProblem1f();
+void runProblem1E ();
+void runProblem1F();
 void runProblem2b();
 void runProblem2c();
+void runProblem2D();
+void runProblem2E();
 
 int main ()
 {
-//    runProblem1c();
-    //runProblem1f();
-    //VectorXd test=VectorXd::LinSpaced(9,0,1);
-    //cout<<test<<endl;
+    runProblem1c();
+//    runProblem1E();
+//    runProblem1F();
+//    VectorXd test=VectorXd::LinSpaced(8,0.5,4);
+//    cout<<test<<endl;
 //    runProblem2b();
-    runProblem2c();
+//    runProblem2c();
+//    runProblem2D();
+//    runProblem2E();
     return 0;
 }
 
@@ -63,7 +69,7 @@ void runProblem1c()
 
 }
 
-void runProblem1f()
+void runProblem1E ()
 {
 
     cout << "Problem 1 d to e" << std::endl;
@@ -101,6 +107,37 @@ void runProblem1f()
     }
     CubicSpline t;
     t.writeToFile("1E.APPROXERROR.", infinityNorm, 0, aeColNames);
+}
+
+void runProblem1F()
+{
+    CubicSpline cs1F ;
+    ArrayXXd sn1 =cs1F.readSpline("spline_natural1.dat",8);
+//    cout<<"sn1: "<<endl<<sn1<<endl;
+    ArrayXXd sn2 =cs1F.readSpline("spline_natural2.dat",8);
+//    cout<<"sn2: "<<endl<<sn2<<endl;
+    ArrayXXd sp1 =cs1F.readSpline("spline_periodic.dat",6);
+//    cout<<"sp1: "<<endl<<sp1<<endl;
+    vector<string> uValuesNames={"uSpacePoints", "6PIx", "COS(6PIx)", "q3n"};
+
+    ArrayXi n(2);
+    n <<  8, 128 ;
+
+    for (int j=0 ; j < n.size()-1; j++)
+    {
+        const double a=sn1(0,0),b=sn1(0,1);
+        VectorXd nodalPoints=VectorXd::LinSpaced(n[j]+1,a,b);
+        VectorXd fValue(n[j]+1);
+        for (int i = 0; i < n[j]+1; ++i)
+        {
+            fValue[i]=cos(6*M_PI*nodalPoints[i]);
+        }
+        CubicSpline cs;
+        VectorXd coefficents=cs.findCoefficients(fValue);
+        ArrayXXd uValues=cs.findSplineValues(coefficents,nodalPoints);
+        cs.writeToFile("1E.", uValues, n[j], uValuesNames);
+    }
+
 }
 
 void runProblem2b()
@@ -160,37 +197,41 @@ void runProblem2c()
 {
     RootFinding rootFinding;
     vector<string> rootColNames={"x", "y"};
-    ArrayXXd roots=ArrayXXd::Zero(100,2);
+    ArrayXXd roots=ArrayXXd::Zero(200,2);
 //    cout<<rootFinding.calculateF(0.1,0.1,0.1)<<endl;
 //    cout<<rootFinding.calculateJ(0.1,0.1,0.1)<<endl;
     int nRoots=0;
     double ds=0.05;
     VectorXd xInitial(2);
-//    VectorXd unitTangent=VectorXd::Zero(2);
-    xInitial(0)=0.05;xInitial(1)=2;
+    VectorXd unitTangent=VectorXd::Zero(2);
+    xInitial(0)=0;xInitial(1)=2;
     cout<<"Intial Guess: "<<endl<<xInitial<<endl;
-//    cout<<"unitTangent.normalized(): "<<endl<<unitTangent.normalized()<<endl;
+    cout<<"xInitial.normalized(): "<<endl<<xInitial.normalized()<<endl;
+    VectorXd xNew=VectorXd::Zero(2);
+    VectorXd xNew2=VectorXd::Zero(2);
     while (nRoots < roots.rows())
     {
 //        unitTangent=ds*xOld.normalized();
 //        cout<<"unitTangent: "<<endl<<unitTangent<<endl;
-        VectorXd xNew=VectorXd::Zero(2);
-        VectorXd xNew2=VectorXd::Zero(2);
         //double TOL=0.005;
-        xNew=xInitial+ds*xInitial.normalized();
-        cout<<"xInitial: "<<endl<<xInitial<<endl;
+        unitTangent(0)=xInitial(1)/xInitial.lpNorm<2>();
+        unitTangent(1)=-xInitial(0)/xInitial.lpNorm<2>();
+        xNew=xInitial+ds*unitTangent;
+//        xInitial=xInitial.normalized();
         double TOL=pow(10,-2);
         double tolerance=1;
         int j=0;
         for (; j < 100 && tolerance > ds; ++j)
         {
             cout<<"xNew: "<<endl<<xNew<<endl;
+            cout<<"xInitial: "<<endl<<xInitial<<endl;
             VectorXd F=rootFinding.calculateF2C(xNew(0),xNew(1),xInitial(0),xInitial(1),xInitial.lpNorm<2>());
-            MatrixXd J=rootFinding.calculateJ2C(xNew(0),xNew(1),xInitial(0),xInitial(1));
             cout<<"F(x): "<<endl<<F<<endl;
+            MatrixXd J=rootFinding.calculateJ2C(xNew(0),xNew(1),xInitial(0),xInitial(1));
             cout<<"Matrix J: "<<endl<<J<<endl;
             FullPivLU<MatrixXd> JInv(J);
             VectorXd y=-JInv.solve(F);
+            cout<<"y: "<<endl<<y<<endl;
             xNew2=xNew+y;
             cout<<"xNew2: "<<endl<<xNew2<<endl;
             tolerance=(xNew2-xNew).lpNorm<2>();
@@ -211,7 +252,136 @@ void runProblem2c()
 //            cout<<"Initial Guess: ("<<initialGuess(i,0)<<", "<<initialGuess(i,1)<<", "<<initialGuess(i,2)<<")"<<endl;
 //            cout<<"Iteration: "<<j<<", Not New Root : ("<<xNew(0)<<", "<<xNew(1)<<", "<<xNew(2)<<")"<<endl;
         }
+        xInitial=xNew2;
     }
     cout<<"All Roots: "<<endl<<roots<<endl;
     rootFinding.writeToFile("2C",roots,0,rootColNames);
+}
+
+void runProblem2D()
+{
+    cout << "Problem 2D" << std::endl;
+    vector<string> rootColNames={"h", "u"};
+    int n=64;
+    //double lambda=0.5;
+    VectorXd lambda=VectorXd::LinSpaced(8,0.5,4);
+    double h = (double)1/n;
+    RootFinding rootFinding;
+    for (int j = 0; j < lambda.size(); ++j)
+    {
+        ArrayXXd roots=ArrayXXd::Zero(n+1,2);
+        roots.col(0)=ArrayXd::LinSpaced(n+1,0,1);
+        VectorXd uInitial=VectorXd::Zero(n+1);
+        double TOL=pow(10,-12);
+        double tolerance=1;
+        int i=0;
+        for (;i < 100 && tolerance > TOL ; ++i)
+        {
+    //        cout<<"uInitial: "<<endl<<uInitial<<endl;
+            VectorXd uNew=VectorXd::Zero(n+1);
+            VectorXd y=VectorXd::Zero(n-1);
+            VectorXd F_U=rootFinding.calculateF2D(uInitial,h,lambda(j));
+    //        cout<<"F_U: "<<endl<<F_U<<endl;
+            MatrixXd J_U=rootFinding.calculateJ2D(uInitial,h,lambda(j));
+    //        cout<<"J_U: "<<endl<<J_U<<endl;
+            PartialPivLU<MatrixXd> JInv(J_U);
+            y=-JInv.solve(F_U);
+            uNew.segment(1,n-1)=uInitial.segment(1,n-1)+y.segment(0,n-1);
+            tolerance=(uNew-uInitial).lpNorm<2>();
+    //        cout<<"tolerance: "<< tolerance<<endl;
+            uInitial=uNew;
+        }
+        cout<<"Iteration: "<<i<< " for lambda: "<<lambda(j)<<endl;
+        roots.col(1)=uInitial;
+    //    cout<<"All Roots: "<<endl<<roots<<endl;
+        rootFinding.writeToFile("2D",roots,lambda(j)*10,rootColNames);
+    }
+
+}
+
+void runProblem2E()
+{
+    cout << "Problem 2E" << std::endl;
+    vector<string> rootColNames={"h", "u"};
+    int n=5;
+    int nRoots=0;
+    ArrayXXd roots=ArrayXXd::Zero(n+1,10);
+    roots.col(0)=ArrayXd::LinSpaced(n+1,0,1);
+    ArrayXXd otherInfo=ArrayXXd::Zero(4,10);
+    double ds=0.125,TOL=0.001;
+    RootFinding rootFinding;
+    double lambdaInitial=0.5;
+    double h = (double)1/n;
+    double tolerance=1,lbdTilda,lbdNew,lbdyNew;
+    VectorXd uInitial= rootFinding.findInitialU(lambdaInitial, n);
+    VectorXd tk = VectorXd::Zero(n-1);
+    VectorXd uNew = VectorXd::Zero(n + 1);
+    VectorXd uyNew = VectorXd::Zero(n + 1);
+    VectorXd lastRow;
+    while (nRoots < roots.cols()-1)
+    {
+        cout << "uInitial: " << endl << uInitial << endl;
+        MatrixXd FuFlambda = rootFinding.createFuLambda2E(uInitial, h, lambdaInitial);
+        cout << "FuFlambda: " << endl << FuFlambda << endl;
+        JacobiSVD<MatrixXd> svd(FuFlambda, ComputeFullU | ComputeFullV);
+        MatrixXd Vstar = svd.matrixV();
+        lastRow = Vstar.col(Vstar.cols() - 1);
+        cout << "lastRow:" << endl << lastRow << endl;
+//        lastRow=lastRow/lastRow.lpNorm<2>(); Already a unit vector!! //TODO: Remove it
+//        cout << "lastRow Unit Vector:" << endl << lastRow << endl;
+        tk = lastRow.segment(0, lastRow.size() - 1);
+        lbdTilda = lastRow.tail(1)(0);
+//      cout<<"svd.matrixV(): "<<endl<<svd.matrixV()<<endl;
+//      cout<<"svd.singularValues(): "<<endl<<svd.singularValues()<<endl;
+//      cout<<"svd.matrixU(): "<<endl<<svd.matrixU()<<endl;
+      cout<<"Vstar: "<<endl<<Vstar<<endl;
+        cout<<"tk:"<<endl<<tk<<endl;
+        cout<<"lbdTilda:"<<endl<<lbdTilda<<endl;
+        uNew.segment(1, n - 1) = uInitial.segment(1, n - 1) + ds * (tk);
+        lbdNew = lambdaInitial + ds * lbdTilda;
+        cout<<"uNew: "<<endl<<uNew<<endl;
+        cout<<"lbdNew: "<<endl<<lbdNew<<endl;
+        int j=0;
+        tolerance=1;
+        for (; j < 100 && tolerance > ds; ++j)
+        {
+            VectorXd F = rootFinding.calculateF2E(uNew, h, lbdNew, uInitial, tk, lbdTilda, lambdaInitial,ds);
+            cout << "F: " << endl << F << endl;
+            MatrixXd J = rootFinding.calculateJ2E(uNew, h, lbdNew, tk, lbdTilda);
+            cout << "J: " << endl << J << endl;
+            FullPivLU<MatrixXd> JInv(J);
+            VectorXd y = -JInv.solve(F);
+            cout << "y: " << endl << y << endl;
+            cout<< "uInitial.segment(1, n - 2): "<<endl<<uInitial.segment(1, n - 1)<<endl;
+            cout<< " y.segment(0, n - 2): "<<endl<<y.segment(0, n - 1)<<endl;
+            uyNew.segment(1, n - 1) = uInitial.segment(1, n - 1) + y.segment(0, n - 1);
+            cout<< "uyNew: "<<endl<<uyNew<<endl;
+            lbdyNew = y.tail(1)(0);
+            VectorXd tolCalcNew(n + 2), tolCalcOld(n + 2);
+            tolCalcNew.segment(0,uyNew.size()) = uyNew;
+            tolCalcNew[uyNew.size()] = lbdyNew;
+            cout<<"tolCalcNew: "<<endl<<tolCalcNew<<endl;
+            tolCalcOld.segment(0,uNew.size()) = uNew;
+            tolCalcOld[uyNew.size()] = lbdNew;
+            cout<<"tolCalcOld: "<<endl<<tolCalcOld<<endl;
+            tolerance = (tolCalcNew - tolCalcOld).lpNorm<2>();
+            cout << "tolerance: " << tolerance << endl;
+            uNew=uyNew;
+            lbdNew=lbdyNew;
+        }
+        for (int i = 0; i < uyNew.size(); ++i)
+        {
+            roots(i,nRoots+1)=uyNew[i];
+        }
+        otherInfo(0,nRoots)=nRoots;
+        otherInfo(1,nRoots)=lbdyNew;
+        otherInfo(1,nRoots)=tolerance;
+        otherInfo(1,nRoots)=j;
+        nRoots++;
+        uInitial=uNew;
+        lambdaInitial=lbdNew;
+    }
+    cout<<"Roots: "<<endl<<roots<<endl;
+    rootFinding.writeToFile("2EROOTS",roots,0,rootColNames);
+    rootFinding.writeToFile("2EOTHERINFO",otherInfo,0,rootColNames);
 }

@@ -18,6 +18,7 @@ public:
     VectorXd findCoefficients(VectorXd fValue);
     ArrayXXd findSplineValues (VectorXd coeff, VectorXd nPoints);
     void writeToFile (const string fNamePrefix, ArrayXXd uniEvalPoints, const int k, vector<string> colNames);
+    ArrayXXd readSpline(const string &filename, int size);
 
 protected:
     double getBx (double xVal);
