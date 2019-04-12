@@ -47,9 +47,10 @@ VectorXd CubicSpline::findCoefficients (VectorXd fValue)
 ArrayXXd CubicSpline::findSplineValues (VectorXd coeff, VectorXd nPoints)
 {
     const int n=nPoints.size() - 1;
+    double a=nPoints[0],b=nPoints[n];
     int uSpacePointsSize=20*n+1;
     ArrayXXd uniformValues(uSpacePointsSize,4);
-    uniformValues.col(0)=ArrayXd::LinSpaced(uSpacePointsSize,0,1);
+    uniformValues.col(0)=ArrayXd::LinSpaced(uSpacePointsSize,a,b);
     uniformValues.col(1)=6*M_PI*uniformValues.col(0);
     uniformValues.col(2)=uniformValues.col(1).cos();
     uniformValues.col(3)=ArrayXd::Zero(uSpacePointsSize);
@@ -57,8 +58,8 @@ ArrayXXd CubicSpline::findSplineValues (VectorXd coeff, VectorXd nPoints)
     {
 //        cout<<uniformValues(i,0)<<endl;
         VectorXd vXdBi=computeBi(nPoints,uniformValues(i,0));
-        cout<<"vXdBi size: "<<vXdBi.size()<<endl;
-        cout<<"coeff size: "<<coeff.size()<<endl;
+//        cout<<"vXdBi size: "<<vXdBi.size()<<endl;
+//        cout<<"coeff size: "<<coeff.size()<<endl;
         double q3=vXdBi.dot(coeff);
 //        cout<<"q3: "<<q3<<endl;
         uniformValues(i,3)=q3;
@@ -98,7 +99,7 @@ VectorXd CubicSpline::computeBi (VectorXd nPoints, double x)
     int n=nPoints.size();
     double a=nPoints[0],b=nPoints[n-1];
     double h=(b-a)/(double)(n-1);
-    cout<<"n = "<<n<<", h = "<<h<<", a ="<<a<<", b ="<< b <<endl;
+//    cout<<"n = "<<n<<", h = "<<h<<", a ="<<a<<", b ="<< b <<endl;
     VectorXd Bi=VectorXd::Zero(n+2);
     for (int i = 0; i < n+2; ++i)
     {

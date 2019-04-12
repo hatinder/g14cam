@@ -19,7 +19,7 @@ void runProblem2E();
 
 int main ()
 {
-    runProblem1c();
+//    runProblem1c();
 //    runProblem1E();
 //    runProblem1F();
 //    VectorXd test=VectorXd::LinSpaced(8,0.5,4);
@@ -27,7 +27,7 @@ int main ()
 //    runProblem2b();
 //    runProblem2c();
 //    runProblem2D();
-//    runProblem2E();
+    runProblem2E();
     return 0;
 }
 
@@ -111,32 +111,86 @@ void runProblem1E ()
 
 void runProblem1F()
 {
+    //Right Wing
     CubicSpline cs1F ;
     ArrayXXd sn1 =cs1F.readSpline("spline_natural1.dat",8);
-//    cout<<"sn1: "<<endl<<sn1<<endl;
     ArrayXXd sn2 =cs1F.readSpline("spline_natural2.dat",8);
-//    cout<<"sn2: "<<endl<<sn2<<endl;
     ArrayXXd sp1 =cs1F.readSpline("spline_periodic.dat",6);
-//    cout<<"sp1: "<<endl<<sp1<<endl;
-    vector<string> uValuesNames={"uSpacePoints", "6PIx", "COS(6PIx)", "q3n"};
-
-    ArrayXi n(2);
-    n <<  8, 128 ;
-
-    for (int j=0 ; j < n.size()-1; j++)
+    vector<string> xyValuesNames={"x", "y"};
+    ArrayXXd xyValue=ArrayXXd::Zero(20*(sn1.rows()-1)+1,2);
+    VectorXd nodalPoints=VectorXd::LinSpaced(sn1.rows(),0,1);
+    VectorXd xValue=sn1.col(0);
+    VectorXd yValue=sn1.col(1);
+    CubicSpline cs;
+    VectorXd coefficents=cs.findCoefficients(xValue);
+    ArrayXXd xValues=cs.findSplineValues(coefficents,nodalPoints);
+    cout<<"xValues.rows(): "<<xValues.rows()<<endl;
+    cout<<"xyValue.rows(): "<<xyValue.rows()<<endl;
+    for (int i = 0; i < xValues.rows(); ++i)
     {
-        const double a=sn1(0,0),b=sn1(0,1);
-        VectorXd nodalPoints=VectorXd::LinSpaced(n[j]+1,a,b);
-        VectorXd fValue(n[j]+1);
-        for (int i = 0; i < n[j]+1; ++i)
-        {
-            fValue[i]=cos(6*M_PI*nodalPoints[i]);
-        }
-        CubicSpline cs;
-        VectorXd coefficents=cs.findCoefficients(fValue);
-        ArrayXXd uValues=cs.findSplineValues(coefficents,nodalPoints);
-        cs.writeToFile("1E.", uValues, n[j], uValuesNames);
+        xyValue(i,0)=xValues(i,3);
     }
+    coefficents=cs.findCoefficients(yValue);
+    ArrayXXd yValues=cs.findSplineValues(coefficents,nodalPoints);
+    for (int i = 0; i < yValues.rows(); ++i)
+    {
+        xyValue(i,1)=yValues(i,3);
+    }
+    ostringstream iterate_label1;
+    iterate_label1.width(3);
+    iterate_label1.fill('0');
+    iterate_label1 << 1;
+    string file_name = "1FSN1." + iterate_label1.str();
+    cs.writeToFile(file_name, xyValue, 1, xyValuesNames);
+
+    //Left Wing
+    xValue=sn2.col(0);
+    yValue=sn2.col(1);
+    coefficents=cs.findCoefficients(xValue);
+    xValues=cs.findSplineValues(coefficents,nodalPoints);
+    for (int i = 0; i < xValues.rows(); ++i)
+    {
+        xyValue(i,0)=xValues(i,3);
+    }
+    coefficents=cs.findCoefficients(yValue);
+    yValues=cs.findSplineValues(coefficents,nodalPoints);
+    for (int i = 0; i < yValues.rows(); ++i)
+    {
+        xyValue(i,1)=yValues(i,3);
+    }
+    ostringstream iterate_label2;
+    iterate_label2.width(3);
+    iterate_label2.fill('0');
+    iterate_label2 << 2;
+    file_name = "1FSN1." + iterate_label2.str();
+    cs.writeToFile(file_name, xyValue, 2, xyValuesNames);
+
+    //Centre
+    ArrayXXd xyPValue=ArrayXXd::Zero(20*sp1.rows()+1,2);
+    VectorXd pNodalPoints=VectorXd::LinSpaced(sp1.rows()+1,0,1);
+    VectorXd xpValue=sp1.col(0);
+    VectorXd ypValue=sp1.col(1);
+    CubicSplinePeriodic csp;
+    coefficents=csp.findCoefficients(xpValue);
+    xValues=csp.findSplineValues(coefficents,pNodalPoints);
+    cout<<"xValues.rows(): "<<xValues.rows()<<endl;
+    cout<<"xyPValue.rows(): "<<xyPValue.rows()<<endl;
+    for (int i = 0; i < xValues.rows(); ++i)
+    {
+        xyPValue(i,0)=xValues(i,3);
+    }
+    coefficents=csp.findCoefficients(ypValue);
+    yValues=csp.findSplineValues(coefficents,pNodalPoints);
+    for (int i = 0; i < yValues.rows(); ++i)
+    {
+        xyPValue(i,1)=yValues(i,3);
+    }
+    ostringstream iterate_label3;
+    iterate_label3.width(3);
+    iterate_label3.fill('0');
+    iterate_label3 << 3;
+    file_name = "1FSN1." + iterate_label3.str();
+    cs.writeToFile(file_name, xyPValue, 3, xyValuesNames);
 
 }
 
@@ -303,11 +357,11 @@ void runProblem2E()
 {
     cout << "Problem 2E" << std::endl;
     vector<string> rootColNames={"h", "u"};
-    int n=5;
+    int n=64;
     int nRoots=0;
-    ArrayXXd roots=ArrayXXd::Zero(n+1,10);
+    ArrayXXd roots=ArrayXXd::Zero(n+1,201);
     roots.col(0)=ArrayXd::LinSpaced(n+1,0,1);
-    ArrayXXd otherInfo=ArrayXXd::Zero(4,10);
+    ArrayXXd otherInfo=ArrayXXd::Zero(4,201);
     double ds=0.125,TOL=0.001;
     RootFinding rootFinding;
     double lambdaInitial=0.5;
@@ -320,13 +374,13 @@ void runProblem2E()
     VectorXd lastRow;
     while (nRoots < roots.cols()-1)
     {
-        cout << "uInitial: " << endl << uInitial << endl;
+//        cout << "uInitial: " << endl << uInitial << endl;
         MatrixXd FuFlambda = rootFinding.createFuLambda2E(uInitial, h, lambdaInitial);
-        cout << "FuFlambda: " << endl << FuFlambda << endl;
+//        cout << "FuFlambda: " << endl << FuFlambda << endl;
         JacobiSVD<MatrixXd> svd(FuFlambda, ComputeFullU | ComputeFullV);
         MatrixXd Vstar = svd.matrixV();
         lastRow = Vstar.col(Vstar.cols() - 1);
-        cout << "lastRow:" << endl << lastRow << endl;
+//        cout << "lastRow:" << endl << lastRow << endl;
 //        lastRow=lastRow/lastRow.lpNorm<2>(); Already a unit vector!! //TODO: Remove it
 //        cout << "lastRow Unit Vector:" << endl << lastRow << endl;
         tk = lastRow.segment(0, lastRow.size() - 1);
@@ -334,38 +388,38 @@ void runProblem2E()
 //      cout<<"svd.matrixV(): "<<endl<<svd.matrixV()<<endl;
 //      cout<<"svd.singularValues(): "<<endl<<svd.singularValues()<<endl;
 //      cout<<"svd.matrixU(): "<<endl<<svd.matrixU()<<endl;
-      cout<<"Vstar: "<<endl<<Vstar<<endl;
-        cout<<"tk:"<<endl<<tk<<endl;
-        cout<<"lbdTilda:"<<endl<<lbdTilda<<endl;
+//      cout<<"Vstar: "<<endl<<Vstar<<endl;
+//        cout<<"tk:"<<endl<<tk<<endl;
+//        cout<<"lbdTilda:"<<endl<<lbdTilda<<endl;
         uNew.segment(1, n - 1) = uInitial.segment(1, n - 1) + ds * (tk);
         lbdNew = lambdaInitial + ds * lbdTilda;
-        cout<<"uNew: "<<endl<<uNew<<endl;
-        cout<<"lbdNew: "<<endl<<lbdNew<<endl;
+//        cout<<"uNew: "<<endl<<uNew<<endl;
+//        cout<<"lbdNew: "<<endl<<lbdNew<<endl;
         int j=0;
         tolerance=1;
         for (; j < 100 && tolerance > ds; ++j)
         {
             VectorXd F = rootFinding.calculateF2E(uNew, h, lbdNew, uInitial, tk, lbdTilda, lambdaInitial,ds);
-            cout << "F: " << endl << F << endl;
+//            cout << "F: " << endl << F << endl;
             MatrixXd J = rootFinding.calculateJ2E(uNew, h, lbdNew, tk, lbdTilda);
-            cout << "J: " << endl << J << endl;
+//            cout << "J: " << endl << J << endl;
             FullPivLU<MatrixXd> JInv(J);
             VectorXd y = -JInv.solve(F);
-            cout << "y: " << endl << y << endl;
-            cout<< "uInitial.segment(1, n - 2): "<<endl<<uInitial.segment(1, n - 1)<<endl;
-            cout<< " y.segment(0, n - 2): "<<endl<<y.segment(0, n - 1)<<endl;
+//            cout << "y: " << endl << y << endl;
+//            cout<< "uInitial.segment(1, n - 2): "<<endl<<uInitial.segment(1, n - 1)<<endl;
+//            cout<< " y.segment(0, n - 2): "<<endl<<y.segment(0, n - 1)<<endl;
             uyNew.segment(1, n - 1) = uInitial.segment(1, n - 1) + y.segment(0, n - 1);
-            cout<< "uyNew: "<<endl<<uyNew<<endl;
+//            cout<< "uyNew: "<<endl<<uyNew<<endl;
             lbdyNew = y.tail(1)(0);
             VectorXd tolCalcNew(n + 2), tolCalcOld(n + 2);
             tolCalcNew.segment(0,uyNew.size()) = uyNew;
             tolCalcNew[uyNew.size()] = lbdyNew;
-            cout<<"tolCalcNew: "<<endl<<tolCalcNew<<endl;
+//            cout<<"tolCalcNew: "<<endl<<tolCalcNew<<endl;
             tolCalcOld.segment(0,uNew.size()) = uNew;
             tolCalcOld[uyNew.size()] = lbdNew;
-            cout<<"tolCalcOld: "<<endl<<tolCalcOld<<endl;
+//            cout<<"tolCalcOld: "<<endl<<tolCalcOld<<endl;
             tolerance = (tolCalcNew - tolCalcOld).lpNorm<2>();
-            cout << "tolerance: " << tolerance << endl;
+//            cout << "tolerance: " << tolerance << endl;
             uNew=uyNew;
             lbdNew=lbdyNew;
         }
@@ -380,8 +434,9 @@ void runProblem2E()
         nRoots++;
         uInitial=uNew;
         lambdaInitial=lbdNew;
+        cout<<"nRoots: "<<nRoots<<endl;
     }
-    cout<<"Roots: "<<endl<<roots<<endl;
+//    cout<<"Roots: "<<endl<<roots<<endl;
     rootFinding.writeToFile("2EROOTS",roots,0,rootColNames);
     rootFinding.writeToFile("2EOTHERINFO",otherInfo,0,rootColNames);
 }

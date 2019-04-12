@@ -27,8 +27,8 @@ VectorXd CubicSplinePeriodic::findCoefficients (VectorXd fValue)
         M(j,j)=4;
         M(j,j+1)=1;
     }
-    //cout<<"MATRIX: "<<endl<<M<<endl;
-    //cout<<"LOCAL F VALUE:"<<endl<<localFValue<<endl;
+//    cout<<"MATRIX: "<<endl<<M<<endl;
+//    cout<<"LOCAL F VALUE:"<<endl<<localFValue<<endl;
     FullPivLU<MatrixXd> fullPivLU(M);
     cValue=fullPivLU.solve(localFValue);
 //    cout<<cValue<<endl;
@@ -117,6 +117,9 @@ ArrayXXd CubicSplinePeriodic::findSplineValues (VectorXd coeff, VectorXd nPoints
 //        else
 //        {
             VectorXd vXdBi=computeBi(nPoints,uniformValues(i,0));
+//        cout<<"vXdBi size: "<<vXdBi.size()<<endl;
+//        cout<<"coeff size: "<<extnCoeff.size()<<endl;
+
             q3 = vXdBi.dot(extnCoeff);
 //        }
 //        cout<<uniformValues(i,0)<<endl;
