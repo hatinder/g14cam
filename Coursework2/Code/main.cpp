@@ -2,21 +2,20 @@
 #include <iomanip>
 #include "GaussQuadrature.hpp"
 #include "Utility.hpp"
+#include "helper.hpp"
 
 using namespace std;
 
-template<typename T>
-ostream &operator<< (ostream &out, const vector<T> &v);    //cout operator overload for vector
-template<typename T>
-ostream &operator<< (ostream &out, const map<T, T> &m);    //cout operator overload for map
 void runProblem1a ();                                      //PROBLEM 1a Implementation
 void runProblem1b ();                                      //PROBLEM 1b Implementation
+void runProblem1c ();
 
 int main ()
 {
     std::cout << "Hello, World!" << std::endl;
-    runProblem1a();
-    runProblem1b();
+//    runProblem1a();
+//    runProblem1b();
+    runProblem1c();
     return 0;
 }
 
@@ -43,21 +42,16 @@ void runProblem1b ()
     cout << "=====================" << endl;
     cout << "Running Problem 1 (b)" << endl;
     cout << "=====================" << endl;
+    GaussQuadrature gaussQuadrature;
+    cout << gaussQuadrature.NewtonMethod(5);
 
 }
 
-template<typename T>
-ostream &operator<< (ostream &out, const vector<T> &v)
+void runProblem1c ()
 {
-    for (int i = 0; i < v.size(); ++i)
-    { out << setw(12) << v[i] << endl; }
-    return out;
+    cout << "=====================" << endl;
+    cout << "Running Problem 1 (c)" << endl;
+    cout << "=====================" << endl;
+
 }
 
-template<typename T>
-ostream &operator<< (ostream &out, const map<T, T> &m)
-{
-    for (const pair<T, T> p:m)
-    { out << setw(12) << p.first << " : " << setw(12) << p.second << endl; }
-    return out;
-}

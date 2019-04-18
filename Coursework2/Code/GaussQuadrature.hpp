@@ -20,6 +20,7 @@ public:
 
     map<double, double> LegendrePolynomialDerivative (int n, vector<double> v) override;
 
+    vector<double> NewtonMethod (int n) override;
 };
 
 

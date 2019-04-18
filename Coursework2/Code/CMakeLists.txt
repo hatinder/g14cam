@@ -4,4 +4,4 @@ project(Code)
 set(CMAKE_CXX_STANDARD 11)
 
 
-add_executable(CW main.cpp GaussQuadrature.cpp GaussQuadrature.hpp IGaussQuadrature.hpp IUtility.hpp Utility.cpp Utility.hpp)
+add_executable(CW main.cpp GaussQuadrature.cpp GaussQuadrature.hpp IGaussQuadrature.hpp IUtility.hpp Utility.cpp Utility.hpp helper.hpp)

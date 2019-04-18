@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <cmath>
 #include "GaussQuadrature.hpp"
 
 map<double, double> GaussQuadrature::LegendrePolynomial (int n, vector<double> v)
@@ -74,9 +75,40 @@ map<double, double> GaussQuadrature::LegendrePolynomialDerivative (int n, vector
     return results;
 }
 
-//void
-//GaussQuadrature::writeToFile (const string fNamePrefix, map<double, double> uniEvalPoints, const int k,
-//                              vector<string> colNames)
-//{
-//
-//}
+vector<double> GaussQuadrature::NewtonMethod (int n)
+{
+    int maxIter=100,m,k=0;
+    double TOL=pow(10,-12);
+    vector<double> results(n,0.0);
+    if(n%2==1)      // Exploit the fact: for n = odd number one root is zero. n=k+1
+    {
+        results[n-1]=0;
+        m=n-1;
+    }
+    else
+    {
+        m=n;
+    }
+    for (int i=0; i < m/2; i++)
+    {
+        vector<double> initialGuess(1,0.0),nextValue(1,0.0);
+        double ig=cos(M_PI*(i+1.0-1.0/4.0)/(n+1.0/2.0));
+        initialGuess[0]=ig;
+        int j = 0;
+        double tolerance=1.0;
+        for (; j < maxIter && tolerance > TOL; ++j)
+        {
+            auto Nr=LegendrePolynomial(n,initialGuess);             //Numerator = Phi(x)
+            auto Dr=LegendrePolynomialDerivative(n,initialGuess);   //Denominator = dPhi(x) derivative
+            nextValue[0]=initialGuess[0]- (Nr[initialGuess[0]]/Dr[initialGuess[0]]);
+            tolerance=abs(nextValue[0]-initialGuess[0]);
+            initialGuess[0]=nextValue[0];
+        }
+//        cout<<"Iteration: "<<j<<endl;
+        results[k]=initialGuess[0];
+        results[k+1]=-initialGuess[0];  //Exploit the fact: roots appear symmetrically about x=0
+        k=k+2;
+    }
+    return results;
+}
+

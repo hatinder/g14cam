@@ -15,6 +15,8 @@ public:
     vector<double> LinearSpaced (double min, double max, int size) override;
 
     void writeToFile (string fNamePrefix, map<double, double> m, int k, vector<string> colNames) override;
+
+
 };
 
 

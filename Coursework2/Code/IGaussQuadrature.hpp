@@ -14,8 +14,11 @@ using namespace std;
 class IGaussQuadrature
 {
 public:
-    virtual map<double, double> LegendrePolynomial (int n, vector<double> v) = 0;     // Legendre Polynomial Virtual Function
-    virtual map<double, double> LegendrePolynomialDerivative (int n, vector<double> v) = 0;     // Legendre Polynomial Virtual Function
+    virtual map<double, double>
+    LegendrePolynomial (int n, vector<double> v) = 0;     // Legendre Polynomial Virtual Function
+    virtual map<double, double>
+    LegendrePolynomialDerivative (int n, vector<double> v) = 0;     // Legendre Polynomial Virtual Function
+    virtual vector<double> NewtonMethod (int n) = 0;
 };
 
 #endif //CODE_IGAUSSQUADRATURE_HPP

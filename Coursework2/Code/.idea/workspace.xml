@@ -11,16 +11,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96d4c954-2e90-43ce-8eb7-891fdea22274" name="Default Changelist" comment="Updates for CW2 - Problem 1a competed.">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GaussQuadrature.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GaussQuadrature.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IGaussQuadrature.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IUtility.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utility.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utility.hpp" afterDir="false" />
+    <list default="true" id="96d4c954-2e90-43ce-8eb7-891fdea22274" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/helper.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GaussQuadrature.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GaussQuadrature.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GaussQuadrature.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/GaussQuadrature.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IGaussQuadrature.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/IGaussQuadrature.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utility.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Utility.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -39,14 +37,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="323">
+              <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#106#118#0" expanded="true" />
-                <element signature="e#227#239#0" expanded="true" />
-                <element signature="e#836#848#0" expanded="true" />
-                <element signature="e#1098#1110#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -56,7 +50,7 @@
         <entry file="file://$PROJECT_DIR$/IUtility.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -65,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/Utility.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="447">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
               <folding>
                 <element signature="e#44#63#0" expanded="true" />
               </folding>
@@ -74,12 +68,39 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utility.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+              <folding>
+                <element signature="e#96#110#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GaussQuadrature.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+            <state relative-caret-position="237">
+              <caret line="103" column="56" lean-forward="true" selection-start-line="103" selection-start-column="56" selection-end-line="103" selection-end-column="56" />
               <folding>
                 <element signature="e#44#62#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helper.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="370">
+              <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+              <folding>
+                <element signature="e#93#110#0" expanded="true" />
+                <element signature="e#140#149#0" expanded="true" />
+                <element signature="e#339#351#0" expanded="true" />
+                <element signature="e#516#528#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,8 +121,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IGaussQuadrature.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+            <state relative-caret-position="371">
+              <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
               <folding>
                 <element signature="e#113#130#0" expanded="true" />
               </folding>
@@ -119,12 +140,13 @@
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/IGaussQuadrature.hpp" />
-        <option value="$PROJECT_DIR$/Utility.hpp" />
         <option value="$PROJECT_DIR$/GaussQuadrature.hpp" />
         <option value="$PROJECT_DIR$/IUtility.hpp" />
-        <option value="$PROJECT_DIR$/GaussQuadrature.cpp" />
         <option value="$PROJECT_DIR$/Utility.cpp" />
+        <option value="$PROJECT_DIR$/Utility.hpp" />
+        <option value="$PROJECT_DIR$/IGaussQuadrature.hpp" />
+        <option value="$PROJECT_DIR$/helper.hpp" />
+        <option value="$PROJECT_DIR$/GaussQuadrature.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
@@ -197,7 +219,7 @@
       <workItem from="1555088137048" duration="703000" />
       <workItem from="1555089326801" duration="2411000" />
       <workItem from="1555321263926" duration="608000" />
-      <workItem from="1555323793044" duration="25842000" />
+      <workItem from="1555323793044" duration="33252000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Course work 2">
       <created>1555089500588</created>
@@ -213,11 +235,18 @@
       <option name="project" value="LOCAL" />
       <updated>1555090126282</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updates for CW2 - Problem 1a completed.">
+      <created>1555512746597</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1555512746597</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29715000" />
+    <option name="totallyTimeSpent" value="37125000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -283,19 +312,15 @@
     <MESSAGE value="Adding Course work 2" />
     <MESSAGE value="Updates for CW2" />
     <MESSAGE value="Updates for CW2 - Problem 1a competed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates for CW2 - Problem 1a competed." />
+    <MESSAGE value="Updates for CW2 - Problem 1a completed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates for CW2 - Problem 1a completed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/GaussQuadrature.cpp</url>
-          <line>12</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>29</line>
+          <line>28</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -305,8 +330,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/GaussQuadrature.cpp</url>
-          <line>36</line>
-          <option name="timeStamp" value="8" />
+          <line>100</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -337,36 +362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utility.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="94" lean-forward="true" selection-start-line="14" selection-start-column="94" selection-end-line="14" selection-end-column="94" />
-          <folding>
-            <element signature="e#96#110#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IGaussQuadrature.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-          <folding>
-            <element signature="e#113#130#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GaussQuadrature.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#112#143#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -405,19 +400,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IUtility.hpp">
+    <entry file="file://$PROJECT_DIR$/IGaussQuadrature.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="371">
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+          <folding>
+            <element signature="e#113#130#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GaussQuadrature.cpp">
+    <entry file="file://$PROJECT_DIR$/GaussQuadrature.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+        <state relative-caret-position="399">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
           <folding>
-            <element signature="e#44#62#0" expanded="true" />
+            <element signature="e#112#143#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -425,23 +423,59 @@
     <entry file="file://$PROJECT_DIR$/Utility.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="447">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
           <folding>
             <element signature="e#44#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Utility.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#96#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IUtility.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+          <folding>
+            <element signature="e#93#110#0" expanded="true" />
+            <element signature="e#140#149#0" expanded="true" />
+            <element signature="e#339#351#0" expanded="true" />
+            <element signature="e#516#528#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GaussQuadrature.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="103" column="56" lean-forward="true" selection-start-line="103" selection-start-column="56" selection-end-line="103" selection-end-column="56" />
+          <folding>
+            <element signature="e#44#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="323">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#106#118#0" expanded="true" />
-            <element signature="e#227#239#0" expanded="true" />
-            <element signature="e#836#848#0" expanded="true" />
-            <element signature="e#1098#1110#0" expanded="true" />
           </folding>
         </state>
       </provider>
