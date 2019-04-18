@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <cmath>
 #include "GaussQuadrature.hpp"
 
 map<double, double> GaussQuadrature::LegendrePolynomial (int n, vector<double> v)
@@ -77,38 +76,70 @@ map<double, double> GaussQuadrature::LegendrePolynomialDerivative (int n, vector
 
 vector<double> GaussQuadrature::NewtonMethod (int n)
 {
-    int maxIter=100,m,k=0;
-    double TOL=pow(10,-12);
-    vector<double> results(n,0.0);
-    if(n%2==1)      // Exploit the fact: for n = odd number one root is zero. n=k+1
+    int maxIter = 100, m, k = 0;
+    double TOL = pow(10, -12);
+    vector<double> results(n, 0.0);
+    if (n % 2 == 1)      // Exploit the fact: for n = odd number one root is zero. n=k+1
     {
-        results[n-1]=0;
-        m=n-1;
+        results[n - 1] = 0;
+        m = n - 1;
     }
     else
     {
-        m=n;
+        m = n;
     }
-    for (int i=0; i < m/2; i++)
+    for (int i = 0; i < m / 2; i++)
     {
-        vector<double> initialGuess(1,0.0),nextValue(1,0.0);
-        double ig=cos(M_PI*(i+1.0-1.0/4.0)/(n+1.0/2.0));
-        initialGuess[0]=ig;
+        vector<double> initialGuess(1, 0.0), nextValue(1, 0.0);
+        double ig = cos(M_PI * (i + 1.0 - 1.0 / 4.0) / (n + 1.0 / 2.0));
+        initialGuess[0] = ig;
         int j = 0;
-        double tolerance=1.0;
+        double tolerance = 1.0;
         for (; j < maxIter && tolerance > TOL; ++j)
         {
-            auto Nr=LegendrePolynomial(n,initialGuess);             //Numerator = Phi(x)
-            auto Dr=LegendrePolynomialDerivative(n,initialGuess);   //Denominator = dPhi(x) derivative
-            nextValue[0]=initialGuess[0]- (Nr[initialGuess[0]]/Dr[initialGuess[0]]);
-            tolerance=abs(nextValue[0]-initialGuess[0]);
-            initialGuess[0]=nextValue[0];
+            auto Nr = LegendrePolynomial(n, initialGuess);             //Numerator = Phi(x)
+            auto Dr = LegendrePolynomialDerivative(n, initialGuess);   //Denominator = dPhi(x) derivative
+            nextValue[0] = initialGuess[0] - (Nr[initialGuess[0]] / Dr[initialGuess[0]]);
+            tolerance = abs(nextValue[0] - initialGuess[0]);
+            initialGuess[0] = nextValue[0];
         }
 //        cout<<"Iteration: "<<j<<endl;
-        results[k]=initialGuess[0];
-        results[k+1]=-initialGuess[0];  //Exploit the fact: roots appear symmetrically about x=0
-        k=k+2;
+        results[k] = initialGuess[0];
+        results[k + 1] = -initialGuess[0];  //Exploit the fact: roots appear symmetrically about x=0
+        k = k + 2;
     }
     return results;
+}
+
+vector<vector<double>> GaussQuadrature::findPointsAndWeights (int n)
+{
+    vector<vector<double>> pointsNWeights;
+    vector<double> roots(n, 0.0), weights(n, 0.0);     //intialize roots and weights with value 0.0 and size = n
+    roots = NewtonMethod(n);                          //get all roots first
+    map<double, double> dPhiK = LegendrePolynomialDerivative(n, roots); //get all derivatives as key value pairs
+    for (int i = 0; i < n; ++i)                     //iterate thru roots to get corresponding weights
+    {
+        weights[i] = 2.0 / ((1 - roots[i] * roots[i]) * (dPhiK[roots[i]] * dPhiK[roots[i]]));
+    }
+    pointsNWeights.push_back(roots);    //first vector = roots
+    pointsNWeights.push_back(weights);  //second vector = weights
+    return pointsNWeights;
+}
+
+double
+GaussQuadrature::getApproxValue1C (double a, double b, vector<double> roots, vector<double> weights, int n, int degree) //generic solution
+{
+    double result=0.0;
+    for (int i = 0; i < n; ++i)
+    {
+        result+=pow((((b-a)*roots[i]+(b+a))/2.0),degree)*weights[i];
+    }
+    result=((b-a)/2.0)*result;
+    return result;
+}
+
+double GaussQuadrature::getExactValueFor1D (double a, double b)
+{
+    return ((pow(sin(b),3)/3.0)-(pow(sin(a),3)/3.0));
 }
 

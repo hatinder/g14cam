@@ -8,14 +8,16 @@ using namespace std;
 
 void runProblem1a ();                                      //PROBLEM 1a Implementation
 void runProblem1b ();                                      //PROBLEM 1b Implementation
-void runProblem1c ();
+void runProblem1c ();                                      //PROBLEM 1c Implementation
+void runProblem1d ();                                      //PROBLEM 1d Implementation
 
 int main ()
 {
     std::cout << "Hello, World!" << std::endl;
 //    runProblem1a();
 //    runProblem1b();
-    runProblem1c();
+//    runProblem1c();
+    runProblem1d();
     return 0;
 }
 
@@ -52,6 +54,43 @@ void runProblem1c ()
     cout << "=====================" << endl;
     cout << "Running Problem 1 (c)" << endl;
     cout << "=====================" << endl;
-
+    GaussQuadrature gaussQuadrature;
+/*
+    vector<vector<double >> pointsAndWeights=gaussQuadrature.findPointsAndWeights(3);
+    cout<<"Points: "<<endl<<pointsAndWeights[0];
+    cout<<"Weights: "<<endl<<pointsAndWeights[1];
+    cout << "Approx Value: " << gaussQuadrature.getApproxValue1C(1.0, 3.0, pointsAndWeights[0], pointsAndWeights[1], 3, 5)
+         << endl;
+    cout<<"Exact  Value: "<<gaussQuadrature.getExactValueFor1C(1.0,3.0,5)<<endl;
+*/
+    double a = 1.0, b = 3.0;
+    for (int i = 1; i <= 5; ++i)    //Setting n from 1 to 5
+    {
+        double exactValue, approxValue;
+        for (int j = 1; j <= 2 * i; ++j)    //Setting degree from 1 to 2n
+        {
+            vector<vector<double >> pointsAndWeights = gaussQuadrature.findPointsAndWeights(i); //get roots, weights
+            exactValue = gaussQuadrature.getExactValueFor1C(a, b, j);
+            approxValue = gaussQuadrature.getApproxValue1C(a, b, pointsAndWeights[0], pointsAndWeights[1], i, j);
+            cout << "Degree: " << setw(3) << j << " , n: " << setw(3) << i << " , Exact: " << setw(12)
+                 << setprecision(10) << exactValue << " , Approx: " << setw(12) << approxValue << " , Error: "
+                 << setw(12) << abs(exactValue - approxValue) << endl;
+        }
+    }
 }
 
+void runProblem1d ()
+{
+    cout << "=====================" << endl;
+    cout << "Running Problem 1 (d)" << endl;
+    cout << "=====================" << endl;
+    GaussQuadrature gaussQuadrature;
+    double a=0.0,b=3*M_PI/4.0;
+    cout<< gaussQuadrature.getExactValueFor1D(a, b);
+    for (int i = 1; i <= 10; ++i)
+    {
+        vector<vector<double >> pointsAndWeights = gaussQuadrature.findPointsAndWeights(i); //get roots, weights
+
+    }
+
+}

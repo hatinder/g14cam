@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 
+
 using namespace std;
 
 
@@ -19,6 +20,15 @@ public:
     virtual map<double, double>
     LegendrePolynomialDerivative (int n, vector<double> v) = 0;     // Legendre Polynomial Virtual Function
     virtual vector<double> NewtonMethod (int n) = 0;
+
+    virtual vector<vector<double>> findPointsAndWeights (int n) = 0;
+
+    virtual double getExactValueFor1C (double a, double b, int n) = 0;
+
+    virtual double getExactValueFor1D (double a, double b) = 0;
+
+    virtual double
+    getApproxValue1C (double a, double b, vector<double> roots, vector<double> weights, int n, int degree) = 0;
 };
 
 #endif //CODE_IGAUSSQUADRATURE_HPP
