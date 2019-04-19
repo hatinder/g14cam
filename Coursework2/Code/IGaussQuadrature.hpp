@@ -29,6 +29,14 @@ public:
 
     virtual double
     getApproxValue1C (double a, double b, vector<double> roots, vector<double> weights, int n, int degree) = 0;
+
+    virtual double
+    getApproxValue1D (double a, double b, vector<double> roots, vector<double> weights, int n) = 0;
+
+    virtual double
+    getApproxValue1E (double a, double b, double (*f) (double, double), int n, vector<double> roots,
+                      vector<double> weights) = 0;
+
 };
 
 #endif //CODE_IGAUSSQUADRATURE_HPP

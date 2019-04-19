@@ -38,3 +38,21 @@ Utility::writeToFile (const string fNamePrefix, map<double, double> m, const int
     oFileStream.close();
 }
 
+void Utility::writeToFile (string fNamePrefix, map<int, double> m, int k, vector<string> colNames)
+{
+    ostringstream iterate_label;
+    iterate_label.width(3);
+    iterate_label.fill('0');
+    iterate_label << k;
+    string file_name = fNamePrefix + iterate_label.str() + ".txt";
+    ofstream oFileStream;
+    oFileStream.open(file_name.c_str());
+    assert(oFileStream.is_open());
+    for (const auto& v:colNames)
+        oFileStream << setw(12) << v;
+    oFileStream << endl;
+    for(auto v:m)
+        oFileStream << setw(12) << v.first<<setw(12)<<v.second<< endl;
+    oFileStream.close();
+}
+

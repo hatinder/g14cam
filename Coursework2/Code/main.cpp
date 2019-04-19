@@ -85,12 +85,18 @@ void runProblem1d ()
     cout << "Running Problem 1 (d)" << endl;
     cout << "=====================" << endl;
     GaussQuadrature gaussQuadrature;
-    double a=0.0,b=3*M_PI/4.0;
-    cout<< gaussQuadrature.getExactValueFor1D(a, b);
+    vector<string> colNames = {"n", "error"};
+    Utility utility;
+    double a = 0.0, b = 3 * M_PI / 4.0, approxValue, exactValue;
+    exactValue = gaussQuadrature.getExactValueFor1D(a, b);
+    map<int,double> results;
     for (int i = 1; i <= 10; ++i)
     {
         vector<vector<double >> pointsAndWeights = gaussQuadrature.findPointsAndWeights(i); //get roots, weights
-
+        approxValue = gaussQuadrature.getApproxValue1D(a, b, pointsAndWeights[0], pointsAndWeights[1], i);
+        cout << "n: " << setw(3) << i << " , Exact: " << setw(12) << setprecision(10) << exactValue << " , Approx: "
+             << setw(12) << approxValue << " , Error: " << setw(12) << abs(exactValue - approxValue) << endl;
+        results[i]=abs(exactValue - approxValue);
     }
-
+    utility.writeToFile("PROBLEM1D",results,0,colNames);
 }

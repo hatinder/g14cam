@@ -16,7 +16,7 @@ public:
 
     void writeToFile (string fNamePrefix, map<double, double> m, int k, vector<string> colNames) override;
 
-
+    void writeToFile (string fNamePrefix, map<int, double> m, int k, vector<string> colNames) override;
 };
 
 

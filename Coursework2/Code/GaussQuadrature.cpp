@@ -143,3 +143,33 @@ double GaussQuadrature::getExactValueFor1D (double a, double b)
     return ((pow(sin(b),3)/3.0)-(pow(sin(a),3)/3.0));
 }
 
+double
+GaussQuadrature::getApproxValue1D (double a, double b, vector<double> roots, vector<double> weights, int n)
+{
+    double result=0.0;
+    for (int i = 0; i < n; ++i)
+    {
+        result+=sin(((b-a)*roots[i]+(b+a))/2.0)*sin(((b-a)*roots[i]+(b+a))/2.0)*cos(((b-a)*roots[i]+(b+a))/2.0)*weights[i];
+    }
+    result=((b-a)/2.0)*result;
+    return result;
+}
+
+double GaussQuadrature::getApproxValue1E (double a, double b, double (*f) (double, double), int n, vector<double> roots,
+                                          vector<double> weights)
+{
+    double x, y;
+    double result=0.0;
+    for (int i = 0; i < n; ++i)
+    {
+        y=(roots[i]+1.0)/4.0;
+        for (int j = 0; j < n; ++j)
+        {
+            x=(roots[i]+1.0)/4.0;
+            double fValue=f(x,y);
+            result+=weights[j]*fValue*weights[i];
+        }
+    }
+    return result;
+}
+
