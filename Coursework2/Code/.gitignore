@@ -20,7 +20,7 @@
 
 # Libraries
 *.lib
-*.a
+*.ARungeKutta2
 *.la
 *.lo
 

@@ -37,6 +37,9 @@ public:
 
     double getApproxValue1E (double a, double b, double (*f) (double, double), int n, vector<double> roots,
                              vector<double> weights) override;
+
+    double getApproxValue1F (double a, double b, double (*f) (double, double), int n, vector<double> roots,
+                             vector<double> weights) override;
 };
 
 

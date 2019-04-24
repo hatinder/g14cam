@@ -3,6 +3,7 @@
 #include "GaussQuadrature.hpp"
 #include "Utility.hpp"
 #include "helper.hpp"
+#include "Problem2.hpp"
 
 using namespace std;
 
@@ -10,6 +11,8 @@ void runProblem1a ();                                      //PROBLEM 1a Implemen
 void runProblem1b ();                                      //PROBLEM 1b Implementation
 void runProblem1c ();                                      //PROBLEM 1c Implementation
 void runProblem1d ();                                      //PROBLEM 1d Implementation
+void runProblem1e ();                                      //PROBLEM 1e Implementation
+void runProblem1f ();                                      //PROBLEM 1f Implementation
 
 int main ()
 {
@@ -17,14 +20,22 @@ int main ()
 //    runProblem1a();
 //    runProblem1b();
 //    runProblem1c();
-    runProblem1d();
+//    runProblem1d();
+//    runProblem1e();
+//    runProblem1f();
+//    Problem2 problem2;
+//    problem2.ARungeKutta2();
+//    problem2.AImplicitMidpoint();
+//    problem2.BRungeKutta2();
+//    problem2.BImplicitMidpoint();
+//    problem2.CImplicitMidpoint();
     return 0;
 }
 
 void runProblem1a ()
 {
     cout << "=====================" << endl;
-    cout << "Running Problem 1 (a)" << endl;
+    cout << "Running Problem 1 (ARungeKutta2)" << endl;
     cout << "=====================" << endl;
     vector<string> colNames = {"x", "y"};
     Utility utils;
@@ -99,4 +110,38 @@ void runProblem1d ()
         results[i]=abs(exactValue - approxValue);
     }
     utility.writeToFile("PROBLEM1D",results,0,colNames);
+}
+
+void runProblem1e()
+{
+    cout << "=====================" << endl;
+    cout << "Running Problem 1 (e)" << endl;
+    cout << "=====================" << endl;
+    GaussQuadrature gaussQuadrature;
+    double a=0.0,b=1.0,approxValue;
+    auto f=[](double x, double y) {return sin(x*x+y*y);};
+    for (int i = 1; i <= 5; ++i)
+    {
+        vector<vector<double >> pointsAndWeights = gaussQuadrature.findPointsAndWeights(i);
+        approxValue=gaussQuadrature.getApproxValue1E(a,b,f,i,pointsAndWeights[0],pointsAndWeights[1]);
+        cout<<"n: "<<i <<" , approxValue: "<<approxValue<<endl;
+
+    }
+}
+
+void runProblem1f()
+{
+    cout << "=====================" << endl;
+    cout << "Running Problem 1 (f)" << endl;
+    cout << "=====================" << endl;
+    GaussQuadrature gaussQuadrature;
+    double a=0.0,b=1.0,approxValue;
+    auto f=[](double x, double y) {return sin(x*x+y*y);};   //input function using lambda feature of C++ 11
+    for (int i = 1; i <= 5; ++i)
+    {
+        vector<vector<double >> pointsAndWeights = gaussQuadrature.findPointsAndWeights(i);
+        approxValue=gaussQuadrature.getApproxValue1F(a,b,f,i,pointsAndWeights[0],pointsAndWeights[1]);
+        cout<<"n: "<<i <<" , approxValue: "<<approxValue<<endl;
+
+    }
 }

@@ -37,6 +37,10 @@ public:
     getApproxValue1E (double a, double b, double (*f) (double, double), int n, vector<double> roots,
                       vector<double> weights) = 0;
 
+    virtual double
+    getApproxValue1F (double a, double b, double (*f) (double, double), int n, vector<double> roots,
+                      vector<double> weights) = 0;
+
 };
 
 #endif //CODE_IGAUSSQUADRATURE_HPP

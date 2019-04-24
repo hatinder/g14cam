@@ -162,14 +162,34 @@ double GaussQuadrature::getApproxValue1E (double a, double b, double (*f) (doubl
     double result=0.0;
     for (int i = 0; i < n; ++i)
     {
-        y=(roots[i]+1.0)/4.0;
+        y=((b-a)*roots[i]+b+a)/2.0;
         for (int j = 0; j < n; ++j)
         {
-            x=(roots[i]+1.0)/4.0;
+            x=((b-a)*roots[j]+b+a)/2.0;
             double fValue=f(x,y);
             result+=weights[j]*fValue*weights[i];
         }
     }
-    return result;
+    return ((b-a)/2.0)*((b-a)/2.0)*result;
+}
+
+double GaussQuadrature::getApproxValue1F (double a, double b, double (*f) (double, double), int n, vector<double> roots,
+                                          vector<double> weights)
+{
+    double x, y;
+    double result=0.0;
+    for (int i = 0; i < n; ++i)
+    {
+        x=((b-a)*roots[i]+b+a)/2.0;
+        double yout=0.0;
+        for (int j = 0; j < n; ++j)
+        {
+            y=((x-a)*roots[j]+x+a)/2.0;
+            double fValue=f(x,y);
+            yout+=weights[j]*fValue;
+        }
+        result+=((x-a)/2.0)*yout*weights[i];
+    }
+    return ((b-a)/2.0)*result;
 }
 
