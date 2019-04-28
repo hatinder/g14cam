@@ -6,9 +6,15 @@
 #define CODE_PROBLEM3_HPP
 
 
+#include <Dense>
+
+using  namespace Eigen;
+
 class Problem3
 {
-
+public:
+    VectorXd findU (int N);
+    void A();
 };
 
 

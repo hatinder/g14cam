@@ -4,6 +4,7 @@
 #include "Utility.hpp"
 #include "helper.hpp"
 #include "Problem2.hpp"
+#include "Problem3.hpp"
 
 using namespace std;
 
@@ -29,13 +30,15 @@ int main ()
 //    problem2.BRungeKutta2();
 //    problem2.BImplicitMidpoint();
 //    problem2.CImplicitMidpoint();
+    Problem3 problem3;
+    problem3.A();
     return 0;
 }
 
 void runProblem1a ()
 {
     cout << "=====================" << endl;
-    cout << "Running Problem 1 (ARungeKutta2)" << endl;
+    cout << "Running Problem 1 (a)" << endl;
     cout << "=====================" << endl;
     vector<string> colNames = {"x", "y"};
     Utility utils;

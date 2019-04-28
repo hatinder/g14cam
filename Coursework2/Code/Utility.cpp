@@ -56,3 +56,62 @@ void Utility::writeToFile (string fNamePrefix, map<int, double> m, int k, vector
     oFileStream.close();
 }
 
+void Utility::writeToFile (string fNamePrefix, VectorXd vxd, int k, vector<string> colNames)
+{
+    ostringstream iterate_label;
+    iterate_label.width(3);
+    iterate_label.fill('0');
+    iterate_label << k;
+    string file_name = fNamePrefix + iterate_label.str() + ".txt";
+    ofstream oFileStream;
+    oFileStream.open(file_name.c_str());
+    assert(oFileStream.is_open());
+    for (const auto& v:colNames)
+        oFileStream << setw(12) << v;
+    oFileStream << endl;
+    for (int i = 0; i < vxd.rows(); ++i)
+    {
+        oFileStream<<vxd(i);
+        oFileStream<<endl;
+    }
+    oFileStream.close();
+}
+
+void Utility::writeToFile (string fNamePrefix, MatrixXd mxd, int k)
+{
+    ostringstream iterate_label;
+    iterate_label.width(3);
+    iterate_label.fill('0');
+    iterate_label << k;
+    string file_name = fNamePrefix + iterate_label.str() + ".txt";
+    ofstream oFileStream;
+    oFileStream.open(file_name.c_str());
+    assert(oFileStream.is_open());
+    oFileStream<<mxd;
+    oFileStream.close();
+}
+
+void Utility::writeToFile (string fNamePrefix, ArrayXXd axd, int k, vector<string> colNames)
+{
+    ostringstream iterate_label;
+    iterate_label.width(3);
+    iterate_label.fill('0');
+    iterate_label << k;
+    string file_name = fNamePrefix + iterate_label.str() + ".txt";
+    ofstream oFileStream;
+    oFileStream.open(file_name.c_str());
+    assert(oFileStream.is_open());
+    for (const auto& v:colNames)
+        oFileStream << setw(12) << v;
+    oFileStream << endl;
+    for (int i = 0; i < axd.rows(); ++i)
+    {
+        for (int j = 0; j < axd.cols(); ++j)
+        {
+            oFileStream << axd(i, j);
+        }
+        oFileStream<<endl;
+    }
+    oFileStream.close();
+}
+
