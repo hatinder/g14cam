@@ -1,5 +1,5 @@
-PRB3AMATRIX000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\MATRIX064.txt';
-PRB3AVECTOR000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\VECTOR064.txt';
+PRB3AMATRIX000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\MATRIX128.txt';
+PRB3AVECTOR000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\VECTOR128.txt';
 
 delimiterIn = ' ';
 % headerlinesIn = 1;

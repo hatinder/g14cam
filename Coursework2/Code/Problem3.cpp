@@ -27,8 +27,14 @@ auto gB = [] (double x, double y)
     return res;
 };
 
-auto f = [] (double x, double y)
+auto fA = [] (double x, double y)
 { return 32 * M_PI * M_PI * cos(4 * M_PI * x) * cos(4 * M_PI * y); };
+
+auto fB = [] (double x, double y)
+{
+    double res = 0.0;
+    return res;
+};
 
 VectorXd Problem3::findU (SparseMatrix<double> SpA, VectorXd F)
 {
@@ -42,8 +48,8 @@ VectorXd Problem3::findU (SparseMatrix<double> SpA, VectorXd F)
         cout << "Decomposition Failed. " << endl;
         return uVec;
     }
-    setNbThreads(16);
-    cout<<"Threads used: "<<nbThreads()<<endl;
+//    setNbThreads(16);
+//    cout << "Threads used: " << nbThreads() << endl;
 //    ConjugateGradient<SparseMatrix<double>, Lower|Upper> solver(SpA);
     uVec = solver.solve(F);
     if (solver.info() != Success)
@@ -74,7 +80,7 @@ void Problem3::A ()
         begin = clock();
         VectorXd nodePoint = VectorXd::LinSpaced(N[k] + 1, 0, 1);
         SparseMatrix<double> SpA = sPDE.createA(N[k]);
-        VectorXd F = sPDE.createB(f, gA, N[k], a, b);
+        VectorXd F = sPDE.createB(fA, gA, N[k], a, b);
         VectorXd uHat = findU(SpA, F);
         MatrixXd Z = MatrixXd::Zero(N[k] + 1, N[k] + 1);
         for (int i = 0; i < N[k] + 1; ++i)       //column
@@ -124,7 +130,7 @@ void Problem3::B ()
     cout << "=====================" << endl;
     cout << "Running Problem 3 (B)" << endl;
     cout << "=====================" << endl;
-    int N = 4;
+    int N = 64 ;
     double a = 0, b = 1;
 //    double h = (b - a) / N;
     StokesPDE stokesPde;
@@ -138,11 +144,12 @@ void Problem3::B ()
 //    cout<<Z<<endl;
 //    cout<<C<<endl;
 //    cout<<stokesPde.createBy(N)<<endl;
-    VectorXd Fu = stokesPde.createB(f, gB, N, a, b); //Creating F_u gB=function based on boundary y=1
+    VectorXd Fu = stokesPde.createBU(gB, N, a, b); //Creating F_u gB=function based on boundary y=1
+//    cout<<"Fu: "<<Fu<<endl;
     VectorXd Fv = VectorXd::Zero((N - 1) * (N - 1));
     VectorXd Fp = VectorXd::Zero(N * N);
     VectorXd F = stokesPde.createF(Fu, Fv, Fp);
-    clock_t begin,end;
+    clock_t begin, end;
     begin = clock();
     VectorXd U = findBigU(C, F);
     end = clock();
@@ -150,6 +157,9 @@ void Problem3::B ()
     cout << "Time Taken to Solve for N: " << N << " is :" << elapsed_secs << endl;
 //    cout<<U<<endl;
     Utility utility;
+    utility.writeToFile("PRB3BMATRIXC",C,0);
+    utility.writeToFile("PRB3BMATRIXF",F,0);
+    utility.writeToFile("PRB3BVECTORU",U,0);
     VectorXd nodePoint = VectorXd::LinSpaced(N + 1, 0, 1);
     MatrixXd matU = MatrixXd::Zero(N + 1, N + 1);
     for (int i = 0; i < N + 1; ++i)       //column
@@ -166,7 +176,7 @@ void Problem3::B ()
             }
         }
     }
-    utility.writeToFile("PRB3BMATRIXU",matU,0);
+    utility.writeToFile("PRB3BMATRIXU", matU, 0);
     MatrixXd matV = MatrixXd::Zero(N + 1, N + 1);
     for (int i = 0; i < N + 1; ++i)       //column
     {
@@ -182,14 +192,22 @@ void Problem3::B ()
             }
         }
     }
-    utility.writeToFile("PRB3BMATRIXV",matV,0);
+    utility.writeToFile("PRB3BMATRIXV", matV, 0);
 }
 
 VectorXd Problem3::findBigU (SparseMatrix<double> SpA, VectorXd F)
 {
+//    SpA.insertBack(SpA.rows()-1,SpA.cols()-1)=1;
     VectorXd uVec = VectorXd::Zero(SpA.rows());
 //    cout << SpA << endl;
-    SparseQR <SparseMatrix<double>, COLAMDOrdering<int> > solver;
+//    SparseLU<SparseMatrix<double>> solver;
+//    solver.compute(SpA);
+//    if (solver.info() != Success)
+//    {
+//        cout << "Decomposition Failed. " << endl;
+//        return uVec;
+//    }
+    SparseQR<SparseMatrix<double>, COLAMDOrdering<int> > solver;
     solver.compute(SpA);
     if (solver.info() != Success)
     {

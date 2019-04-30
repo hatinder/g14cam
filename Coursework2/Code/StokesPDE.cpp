@@ -116,8 +116,8 @@ SparseMatrix<double> StokesPDE::createBx (int N)
             {
                 Bx.insert(i + j * n, i + j * N) = -1;
                 Bx.insert(i + j * n, i + 1 + j * N) = -1;
-                Bx.insert(i + j * n, i + 4 + j * N) = 1;
-                Bx.insert(i + j * n, i + 5 + j * N) = 1;
+                Bx.insert(i + j * n, i + N + j * N) = 1;
+                Bx.insert(i + j * n, i + N + 1 + j * N) = 1;
             }
         }
 //        cout<<"i: "<<i<<"j: "<<n-1<<endl;
@@ -139,8 +139,8 @@ SparseMatrix<double> StokesPDE::createBy (int N)
             {
                 By.insert(i + j * n, i + j * N) = -1;
                 By.insert(i + j * n, i + 1 + j * N) = 1;
-                By.insert(i + j * n, i + 4 + j * N) = -1;
-                By.insert(i + j * n, i + 5 + j * N) = 1;
+                By.insert(i + j * n, i + N + j * N) = -1;
+                By.insert(i + j * n, i + N + 1 + j * N) = 1;
             }
         }
 //        cout<<"i: "<<i<<"j: "<<n-1<<endl;
@@ -210,15 +210,15 @@ StokesPDE::createC (SparseMatrix<double> A, SparseMatrix<double> Bx, SparseMatri
         C.startVec(A.cols() + Z.cols() + c);
         for (SparseMatrix<double>::InnerIterator itBx(Bx, c); itBx; ++itBx)
         {
-            C.insertBack(itBx.row(),A.cols() + Z.cols() +  c) = itBx.value();
+            C.insertBack(itBx.row(), A.cols() + Z.cols() + c) = itBx.value();
         }
         for (SparseMatrix<double>::InnerIterator itBy(By, c); itBy; ++itBy)
         {
-            C.insertBack(itBy.row() + Z.rows(),A.cols() + Z.cols() +  c) = itBy.value();
+            C.insertBack(itBy.row() + Z.rows(), A.cols() + Z.cols() + c) = itBy.value();
         }
         for (SparseMatrix<double>::InnerIterator itZN(ZN, c); itZN; ++itZN)
         {
-            C.insertBack(itZN.row() + Z.rows() + A.rows(),A.cols() + Z.cols() +  c) = itZN.value();
+            C.insertBack(itZN.row() + Z.rows() + A.rows(), A.cols() + Z.cols() + c) = itZN.value();
         }
     }
 
@@ -234,7 +234,72 @@ SparseMatrix<double> StokesPDE::createZN (int N)
 
 VectorXd StokesPDE::createF (VectorXd Fu, VectorXd Fv, VectorXd Fp)
 {
-    VectorXd F(Fu.size()+Fv.size()+Fp.size());
-    F<<Fu,Fv,Fp;
+    VectorXd F(Fu.size() + Fv.size() + Fp.size());
+    F << Fu, Fv, Fp;
     return F;
+}
+
+VectorXd StokesPDE::createBU (double (*g) (double, double), int N, double a, double b)
+{
+    int n = N - 1;
+    double h = (b - a) / (double) N;
+    VectorXd v(n * n);
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < n; ++j)
+        {
+            double u = 0.0;
+//            if(j==(n-1))
+//                u=g(0,1);
+//            else
+//                u=g(0,0);
+            if (i == 0)        //Left Boundary + Top + Bottom Outer
+            {
+                if (j == 0)
+                {
+                    u = g(a + (i + 1) * h, a + j * h) + g(a + i * h, a + (j + 1) * h);
+                }
+                else if (j == (n - 1))
+                {
+                    u = g(a + i * h, a + (j + 1) * h) + g(a + (i + 1) * h, a + (j + 2) * h);
+                }
+                else
+                {
+                    u = g(a + i * h, a + (j + 1) * h);
+                }
+            }
+            else if (i == (n - 1))        //Right Boundary Top + Bottom Outer
+            {
+                if (j == 0)
+                {
+                    u = g(a + (i + 1) * h, a + j * h) + g(a + (i + 2) * h, a + (j + 1) * h);
+                }
+                else if (j == (n - 1))
+                {
+                    u = g(a + (i + 2) * h, a + (j + 1) * h) + g(a + (i + 1) * h, a + (j + 2) * h);
+                }
+                else
+                {
+                    u = g(a + (i + 2) * h, a + (j + 1) * h);
+                }
+            }
+            else if (j == 0)        //Bottom Internal
+            {
+                if (i > 0 or i < (n - 1))
+                {
+                    u = g(a + (i + 1) * h, a + j * h);
+                }
+            }
+            else if (j == (n - 1))    //Top Internal
+            {
+                if (i > 0 or i < (n - 1))
+                {
+                    u = g(a + (i + 1) * h, a + (j + 2) * h);
+                }
+            }
+            v(i * n + j) = u;
+//            cout<<"("<<i<<","<<j<<")"<< " , i*n+j: "<<i*n+j<<" , f: "<<h*h*f(a+(i+1)*h,a+(j+1)*h)<<" ,g:"<<u<<endl;
+        }
+    }
+    return v;
 }
