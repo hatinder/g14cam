@@ -31,7 +31,8 @@ int main ()
 //    problem2.BImplicitMidpoint();
 //    problem2.CImplicitMidpoint();
     Problem3 problem3;
-    problem3.A();
+//    problem3.A();
+    problem3.B();
     return 0;
 }
 

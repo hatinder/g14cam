@@ -18,7 +18,7 @@ template<class T>
 T l2_norm (const vector<T> &x)
 {
     double result = 0.0;
-    for (int i = 0; i < x.size(); ++i)
+    for (unsigned i = 0; i < x.size(); ++i)
     {
         result += x[i] * x[i];
     }
@@ -29,7 +29,7 @@ T l2_norm (const vector<T> &x)
 template<typename T>
 ostream &operator<< (ostream &out, const vector<T> &v)
 {
-    for (int i = 0; i < v.size(); ++i)
+    for (unsigned i = 0; i < v.size(); ++i)
     { out << setw(12) << v[i] << endl; }
     return out;
 }
@@ -47,7 +47,7 @@ template<typename T>
 vector<T> operator* (T &a, const vector<T> &v)
 {
     vector<T> results(v.size());
-    for (int i = 0; i < v.size(); ++i)
+    for (unsigned i = 0; i < v.size(); ++i)
     {
         results[i] = a * v[i];
     }
@@ -58,7 +58,7 @@ template<typename T>
 vector<T> operator/ (const vector<T> &lhs, T &rhs)
 {
     vector<T> results(lhs.size());
-    for (int i = 0; i < lhs.size(); ++i)
+    for (unsigned i = 0; i < lhs.size(); ++i)
     {
         results[i] = lhs[i] / rhs;
     }
@@ -70,7 +70,7 @@ vector<T> operator+ (const vector<T> &lhs, const vector<T> &rhs)
 {
     assert(lhs.size() == rhs.size());
     vector<T> results(lhs.size());
-    for (int i = 0; i < lhs.size(); ++i)
+    for (unsigned i = 0; i < lhs.size(); ++i)
     {
         results[i] = lhs[i] + rhs[i];
     }
@@ -82,7 +82,7 @@ vector<T> operator- (const vector<T> &lhs, const vector<T> &rhs)
 {
     assert(lhs.size() == rhs.size());
     vector<T> results(lhs.size());
-    for (int i = 0; i < lhs.size(); ++i)
+    for (unsigned i = 0; i < lhs.size(); ++i)
     {
         results[i] = lhs[i] - rhs[i];
     }

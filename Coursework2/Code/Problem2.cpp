@@ -24,7 +24,7 @@ void Problem2::ARungeKutta2 ()
     ODE ode;
     Utility utility;
     map<double, double> keyNValueYPair;
-    for (int i = 0; i < N.size(); ++i)
+    for (unsigned i = 0; i < N.size(); ++i)
     {
         vector<map<double, double>> rk2 = ode.applyRungeKutta2(f1, f2, u0, v0, T, N[i]);
         utility.writeToFile("PROBLEM2ARK2V", rk2[0], i, colNames);
@@ -103,7 +103,7 @@ void Problem2::CImplicitMidpoint ()
         double pi=M_PI;
         double time=findByValue(keyValuePair[1],pi);
 //        cout<<"Theta2: "<<iv1[1]<<" , time: "<<time<<endl;
-        theta2TcPair[iv1[1]]=time;   //overloaded function only accepts same data type
+        theta2TcPair[iv1[1]]=time;   //TODO: Pending Review overloaded function only accepts same data type
     }
     Utility utility;
     utility.writeToFile("PRB2CTT",theta2TcPair,0,colNames);
@@ -124,7 +124,7 @@ void Problem2::AImplicitMidpoint ()
     ODE ode;
     Utility utility;
     map<double, double> keyNValueYPair;
-    for (int i = 0; i < N.size(); ++i)
+    for (unsigned i = 0; i < N.size(); ++i)
     {
         vector<map<double, double>> rk2 = ode.applyImplicitMidpoint(f1, f2, u0, v0, T, N[i]);
         utility.writeToFile("PROBLEM2AIMV", rk2[0], i, colNames);
@@ -178,7 +178,7 @@ map<double, double> Problem2::computeHamilton (vector<map<double, double>> yVect
 {
     map<double, double> THPair;
     double dt=T/N, t0=0;
-    for (int i = 0; i < yVector[0].size(); ++i)
+    for (unsigned i = 0; i < yVector[0].size(); ++i)
     {
         double g=9.8;
         double p1=yVector[0][t0];

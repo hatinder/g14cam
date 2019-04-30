@@ -7,14 +7,17 @@
 
 
 #include <Dense>
+#include <Sparse>
 
 using  namespace Eigen;
 
 class Problem3
 {
 public:
-    VectorXd findU (int N);
+    VectorXd findU (SparseMatrix<double> SpA, VectorXd F);
+    VectorXd findBigU (SparseMatrix<double> SpA, VectorXd F);
     void A();
+    void B();
 };
 
 
