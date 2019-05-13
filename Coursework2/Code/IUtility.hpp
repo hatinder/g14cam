@@ -20,6 +20,9 @@ public:
     writeToFile (string fNamePrefix, map<double, double> m, int k, vector<string> colNames) = 0;
 
     virtual void
+    writeToFile (string fNamePrefix, map<double, vector<double>> m, int k, vector<string> colNames) = 0;
+
+    virtual void
     writeToFile (string fNamePrefix, map<int, double> m, int k, vector<string> colNames) = 0;
 
     virtual void

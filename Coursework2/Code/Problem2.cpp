@@ -9,7 +9,24 @@
 #include <vector>
 #include <cmath>
 
-void Problem2::ARungeKutta2 ()
+//global function F for Problem 2b
+auto gF = [] (double theta1, double theta2,double p1, double p2)
+{
+    vector<double> results(4, 0.0);
+    results[0] = (p1 - p2 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
+    results[1] = (2.0 * p2 - p1 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
+    double a = (2.0 * p1 * p2 * sin(theta1 - theta2) * (1.0 + pow(sin(theta1 - theta2),2)));
+    double b = (sin(2.0 * (theta1 - theta2)) * (p1 * p1 - 2.0 * p1 * p2 * cos(theta1 - theta2) + 2 * p2 * p2));
+    double c = (2.0 * pow((1.0 + pow(sin(theta1 - theta2),2)),2));
+    double g = 9.8;
+    results[2] = -((a - b) / c + 2.0 * g * sin(theta1));
+    results[3] = -((b - a) / c + g * sin(theta2));
+    return results;
+};
+
+/*
+// * Old one
+void Problem2:: ARungeKutta2 ()
 {
     cout << "=====================" << endl;
     cout << "Running Problem 2 (ARungeKutta2)" << endl;
@@ -33,6 +50,36 @@ void Problem2::ARungeKutta2 ()
     }
     utility.writeToFile("PROBLEM2ARK2ERROR", keyNValueYPair, 0, colNames);
 }
+*/
+
+// * New one
+void Problem2:: ARungeKutta2 ()
+{
+    cout << "=====================" << endl;
+    cout << "Running Problem 2 (ARungeKutta2)" << endl;
+    cout << "=====================" << endl;
+    vector<string> colNames = {"t", "x1", "x2"};
+    vector<double> initVal={1.0,0.0};
+    double T = 4 * M_PI;
+    auto F = [] ( double t, vector<double> x)
+    {
+        vector<double> results(2, 0.0);
+        results[0]=x[1];
+        results[1]=1.0+x[1]*sin(t)-x[0]*(x[0]+1.0);
+        return results;
+    };
+    vector<int> N = {128, 256, 512, 1024, 2048, 4096};
+    ODE ode;
+    Utility utility;
+    map<double, double> keyNValueYPair;
+    for (unsigned i = 0; i < N.size(); ++i)
+    {
+        map<double,vector<double>> rk2 = ode.applyRK2(F, initVal, T, N[i]);
+        utility.writeToFile("PROBLEM2ARK2",rk2, i, colNames);
+        keyNValueYPair[N[i]] = (cos(T) - rk2.rbegin()->second[0]);
+    }
+    utility.writeToFile("PROBLEM2ARK2ERROR", keyNValueYPair, 0, colNames);
+}
 
 void Problem2::BRungeKutta2 ()
 {
@@ -43,28 +90,15 @@ void Problem2::BRungeKutta2 ()
     vector<double> iv1={M_PI/6.0,M_PI/6.0,0.0,0.0};         //Initial Values
     vector<double> iv2={3.0*M_PI/4.0,3.0*M_PI/4.0,0.0,0.0}; //Initial Values
     double T=100, N=5000;
-    auto F = [] (double theta1, double theta2,double p1, double p2)
-    {
-        vector<double> results(4, 0.0);
-        results[0] = (p1 - p2 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
-        results[1] = (2.0 * p2 - p1 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
-        double a = (2.0 * p1 * p2 * sin(theta1 - theta2) * (1.0 + pow(sin(theta1 - theta2),2)));
-        double b = (sin(2.0 * (theta1 - theta2)) * (p1 * p1 - 2.0 * p1 * p2 * cos(theta1 - theta2) + 2 * p1 * p1));
-        double c = (2.0 * pow((1.0 + pow(sin(theta1 - theta2),2)),2));
-        double g = 9.8;
-        results[2] = -((a - b) / c + 2.0 * g * sin(theta1));
-        results[3] = -((b - a) / c + g * sin(theta2));
-        return results;
-    };
     ODE ode;
-    vector<map<double,double>> keyValuePair=ode.applyRungeKutta2(F, iv1, T, N);
+    vector<map<double,double>> keyValuePair=ode.applyRungeKutta2(gF, iv1, T, N);
     Utility utility;
     utility.writeToFile("PROBLEM2BRK2THETA1",keyValuePair[0],0,colNames);
     utility.writeToFile("PROBLEM2BRK2THETA2",keyValuePair[1],0,colNames);
     map<double,double> THPair1=computeHamilton(keyValuePair,T,N);
     utility.writeToFile("PRB2BRK21TH",THPair1,0,colNames);
 //    utility.writeToFile("PROBLEM2BRK2P",keyValuePair[1],0,colNames);
-    vector<map<double,double>> keyValuePair2=ode.applyRungeKutta2(F, iv2, T, N);
+    vector<map<double,double>> keyValuePair2=ode.applyRungeKutta2(gF, iv2, T, N);
     utility.writeToFile("PROBLEM2B2RK2THETA1",keyValuePair2[0],0,colNames);
     utility.writeToFile("PROBLEM2B2RK2THETA2",keyValuePair2[1],0,colNames);
     map<double,double> THPair2=computeHamilton(keyValuePair2,T,N);
@@ -85,21 +119,8 @@ void Problem2::CImplicitMidpoint ()
     {
         vector<double> iv1={(3.0*M_PI)/6.0,(M_PI/3.0)+(double)i*M_PI/200.0,0.0,0.0};         //Initial Values
         double T=100, N=5000;
-        auto F = [] (double theta1, double theta2,double p1, double p2)
-        {
-            vector<double> results(4, 0.0);
-            results[0] = (p1 - p2 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
-            results[1] = (2.0 * p2 - p1 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
-            double a = (2.0 * p1 * p2 * sin(theta1 - theta2) * (1.0 + pow(sin(theta1 - theta2),2)));
-            double b = (sin(2.0 * (theta1 - theta2)) * (p1 * p1 - 2.0 * p1 * p2 * cos(theta1 - theta2) + 2 * p1 * p1));
-            double c = (2.0 * pow((1.0 + pow(sin(theta1 - theta2),2)),2));
-            double g = 9.8;
-            results[2] = -((a - b) / c + 2.0 * g * sin(theta1));
-            results[3] = -((b - a) / c + g * sin(theta2));
-            return results;
-        };
         ODE ode;
-        vector<map<double,double>> keyValuePair=ode.applyImplicitMidpoint(F, iv1, T, N);
+        vector<map<double,double>> keyValuePair=ode.applyImplicitMidpoint(gF, iv1, T, N);
         double pi=M_PI;
         double time=findByValue(keyValuePair[1],pi);
 //        cout<<"Theta2: "<<iv1[1]<<" , time: "<<time<<endl;
@@ -144,28 +165,15 @@ void Problem2::BImplicitMidpoint ()
     vector<double> iv1={M_PI/6.0,M_PI/6.0,0.0,0.0};         //Initial Values
     vector<double> iv2={(3.0*M_PI)/4.0,(3.0*M_PI)/4.0,0.0,0.0}; //Initial Values
     double T=100, N=5000;
-    auto F = [] (double theta1, double theta2,double p1, double p2)
-    {
-        vector<double> results(4, 0.0);
-        results[0] = (p1 - p2 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
-        results[1] = (2.0 * p2 - p1 * cos(theta1 - theta2)) / (1.0 + pow(sin(theta1 - theta2),2));
-        double a = (2.0 * p1 * p2 * sin(theta1 - theta2) * (1.0 + pow(sin(theta1 - theta2),2)));
-        double b = (sin(2.0 * (theta1 - theta2)) * (p1 * p1 - 2.0 * p1 * p2 * cos(theta1 - theta2) + 2 * p1 * p1));
-        double c = (2.0 * pow((1.0 + pow(sin(theta1 - theta2),2)),2));
-        double g = 9.8;
-        results[2] = -((a - b) / c + 2.0 * g * sin(theta1));
-        results[3] = -((b - a) / c + g * sin(theta2));
-        return results;
-    };
     ODE ode;
-    vector<map<double,double>> keyValuePair=ode.applyImplicitMidpoint(F, iv1, T, N);
+    vector<map<double,double>> keyValuePair=ode.applyImplicitMidpoint(gF, iv1, T, N);
     Utility utility;
     utility.writeToFile("PROBLEM2BIM1THETA1",keyValuePair[0],0,colNames);
     utility.writeToFile("PROBLEM2BIM1THETA2",keyValuePair[1],0,colNames);
     map<double,double> THPair1=computeHamilton(keyValuePair,T,N);
     utility.writeToFile("PRB2BIM1TH",THPair1,0,colNames);
 //    utility.writeToFile("PROBLEM2BRK2P",keyValuePair[1],0,colNames);
-    vector<map<double,double>> keyValuePair2=ode.applyImplicitMidpoint(F, iv2, T, N);
+    vector<map<double,double>> keyValuePair2=ode.applyImplicitMidpoint(gF, iv2, T, N);
     utility.writeToFile("PROBLEM2BIM2THETA1",keyValuePair2[0],0,colNames);
     utility.writeToFile("PROBLEM2BIM2THETA2",keyValuePair2[1],0,colNames);
     map<double,double> THPair2=computeHamilton(keyValuePair2,T,N);

@@ -24,15 +24,15 @@ int main ()
 //    runProblem1d();
 //    runProblem1e();
 //    runProblem1f();
-//    Problem2 problem2;
+    Problem2 problem2;
 //    problem2.ARungeKutta2();
 //    problem2.AImplicitMidpoint();
-//    problem2.BRungeKutta2();
-//    problem2.BImplicitMidpoint();
-//    problem2.CImplicitMidpoint();
-    Problem3 problem3;
+    problem2.BRungeKutta2();
+    problem2.BImplicitMidpoint();
+    problem2.CImplicitMidpoint();
+//    Problem3 problem3;
 //    problem3.A();
-    problem3.B();
+//    problem3.B();
     return 0;
 }
 
@@ -70,25 +70,17 @@ void runProblem1c ()
     cout << "Running Problem 1 (c)" << endl;
     cout << "=====================" << endl;
     GaussQuadrature gaussQuadrature;
-/*
-    vector<vector<double >> pointsAndWeights=gaussQuadrature.findPointsAndWeights(3);
-    cout<<"Points: "<<endl<<pointsAndWeights[0];
-    cout<<"Weights: "<<endl<<pointsAndWeights[1];
-    cout << "Approx Value: " << gaussQuadrature.getApproxValue1C(1.0, 3.0, pointsAndWeights[0], pointsAndWeights[1], 3, 5)
-         << endl;
-    cout<<"Exact  Value: "<<gaussQuadrature.getExactValueFor1C(1.0,3.0,5)<<endl;
-*/
     double a = 1.0, b = 3.0;
     for (int i = 1; i <= 5; ++i)    //Setting n from 1 to 5
     {
         double exactValue, approxValue;
-        for (int j = 1; j <= 2 * i; ++j)    //Setting degree from 1 to 2n
+        for (int j = 0; j <= 2 * i; ++j)    //Setting degree from 1 to 2n
         {
             vector<vector<double >> pointsAndWeights = gaussQuadrature.findPointsAndWeights(i); //get roots, weights
             exactValue = gaussQuadrature.getExactValueFor1C(a, b, j);
             approxValue = gaussQuadrature.getApproxValue1C(a, b, pointsAndWeights[0], pointsAndWeights[1], i, j);
             cout << "Degree: " << setw(3) << j << " , n: " << setw(3) << i << " , Exact: " << setw(12)
-                 << setprecision(10) << exactValue << " , Approx: " << setw(12) << approxValue << " , Error: "
+                 << setprecision(3) << exactValue << " , Approx: " << setw(12) << approxValue << " , Error: "
                  << setw(12) << abs(exactValue - approxValue) << endl;
         }
     }

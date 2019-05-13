@@ -145,6 +145,25 @@ ODE::applyImplicitMidpoint (vector<double, allocator<double>> (*F) (double, doub
     return keyValuePair;
 }
 
+map<double,vector<double>>
+ODE::applyRK2(vector<double> (*F)(double, vector<double>), vector<double> initVal, double T, double N) {
+    map<double,vector<double>> keyTnValueYnPair;    //t_n and y_n key value pairs as return type for u and v
+    double dt = T / N;
+    double t0 = 0.0;
+    vector<double> yVal=initVal;
+    keyTnValueYnPair[t0] = yVal;
+    for (int i = 0; i < N; ++i)
+    {
+        double Dr=2.0;  // double data type for operator overload
+        vector<double> k1 = dt * F(t0,yVal);
+        vector<double> k2 = dt * F(t0+dt,yVal+k1);
+        yVal=yVal + (k1+k2)/Dr;
+        t0 += dt;
+        keyTnValueYnPair[t0] = yVal;
+    }
+    return keyTnValueYnPair;
+}
+
 /*
 vector<map<double, double>>
 ODE::applyRungeKutta2 (vector<double, allocator<double>> (*F) (double, double, double, double), vector<double> initVal,

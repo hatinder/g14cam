@@ -21,6 +21,8 @@ public:
 
     void writeToFile (string fNamePrefix, ArrayXXd axd, int k, vector<string> colNames) override;
 
+    void writeToFile(string fNamePrefix, map<double, vector<double>> m, int k, vector<string> colNames) override;
+
     void writeToFile (string fNamePrefix, VectorXd vxd, int k, vector<string> colNames) override;
 
     void writeToFile (string fNamePrefix, map<int, double> m, int k, vector<string> colNames) override;

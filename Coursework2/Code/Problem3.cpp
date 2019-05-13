@@ -130,7 +130,7 @@ void Problem3::B ()
     cout << "=====================" << endl;
     cout << "Running Problem 3 (B)" << endl;
     cout << "=====================" << endl;
-    int N = 64 ;
+    int N = 3  ;
     double a = 0, b = 1;
 //    double h = (b - a) / N;
     StokesPDE stokesPde;
@@ -142,10 +142,10 @@ void Problem3::B ()
     SparseMatrix<double> C = stokesPde.createC(A, Bx, By, Z, ZN);   // creates By 2x(N-1) + (N) X 2x(N-1) + (N)
 //    cout<<A<<endl;
 //    cout<<Z<<endl;
-//    cout<<C<<endl;
+    cout<<C<<endl;
 //    cout<<stokesPde.createBy(N)<<endl;
     VectorXd Fu = stokesPde.createBU(gB, N, a, b); //Creating F_u gB=function based on boundary y=1
-//    cout<<"Fu: "<<Fu<<endl;
+    cout<<"Fu: "<<Fu<<endl;
     VectorXd Fv = VectorXd::Zero((N - 1) * (N - 1));
     VectorXd Fp = VectorXd::Zero(N * N);
     VectorXd F = stokesPde.createF(Fu, Fv, Fp);
