@@ -2,13 +2,11 @@
 // Created by hsingh9 on 24/04/2019.
 //
 #include <Dense>
-#include <Core>
 #include <Sparse>
 #include <iostream>
 #include "Problem3.hpp"
 #include "StokesPDE.hpp"
 #include "Utility.hpp"
-#include <SparseCholesky>
 #include <ctime>
 
 using namespace std;
@@ -200,14 +198,14 @@ VectorXd Problem3::findBigU (SparseMatrix<double> SpA, VectorXd F)
 //    SpA.insertBack(SpA.rows()-1,SpA.cols()-1)=1;
     VectorXd uVec = VectorXd::Zero(SpA.rows());
 //    cout << SpA << endl;
-//    SparseLU<SparseMatrix<double>> solver;
-//    solver.compute(SpA);
-//    if (solver.info() != Success)
-//    {
-//        cout << "Decomposition Failed. " << endl;
-//        return uVec;
-//    }
-    SparseQR<SparseMatrix<double>, COLAMDOrdering<int> > solver;
+    SparseLU<SparseMatrix<double>> solver;
+    solver.compute(SpA);
+    if (solver.info() != Success)
+    {
+        cout << "Decomposition Failed. " << endl;
+        return uVec;
+    }
+//    SparseQR<SparseMatrix<double>, COLAMDOrdering<int> > solver;
     solver.compute(SpA);
     if (solver.info() != Success)
     {
