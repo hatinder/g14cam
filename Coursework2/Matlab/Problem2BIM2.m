@@ -1,5 +1,5 @@
-F2B2RK2T1000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PROBLEM2BIM2THETA1000.txt';
-F2BR2K2T2000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PROBLEM2BIM2THETA2000.txt';
+F2B2RK2T1000 = '..\Code\cmake-build-debug\PROBLEM2BIM2THETA1000.txt';
+F2BR2K2T2000 = '..\Code\cmake-build-debug\PROBLEM2BIM2THETA2000.txt';
 
 delimiterIn = ' ';
 headerlinesIn = 1;

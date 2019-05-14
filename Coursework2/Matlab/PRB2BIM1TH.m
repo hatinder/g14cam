@@ -1,5 +1,5 @@
-PRB2BIM1TH000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PRB2BIM1TH000.txt';
-PRB2BIM2TH000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PRB2BIM2TH000.txt';
+PRB2BIM1TH000 = '..\Code\cmake-build-debug\PRB2BIM1TH000.txt';
+PRB2BIM2TH000 = '..\Code\cmake-build-debug\PRB2BIM2TH000.txt';
 
 delimiterIn = ' ';
 headerlinesIn = 1;

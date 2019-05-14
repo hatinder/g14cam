@@ -1,4 +1,4 @@
-LP000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PROBLEM1D000.txt';
+LP000 = '..\Code\cmake-build-debug\PROBLEM1D000.txt';
 
 delimiterIn = ' ';
 headerlinesIn = 1;

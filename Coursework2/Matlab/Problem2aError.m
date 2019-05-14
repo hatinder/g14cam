@@ -1,5 +1,5 @@
-FRK2LP000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PROBLEM2ARK2ERROR000.txt';
-FIMLP000 = 'E:\edubitbucket\g14cam\Coursework2\Code\cmake-build-debug\PROBLEM2AIMERROR000.txt';
+FRK2LP000 = '..\Code\cmake-build-debug\PROBLEM2ARK2ERROR000.txt';
+FIMLP000 = '..\Code\cmake-build-debug\PROBLEM2AIMERROR000.txt';
 
 delimiterIn = ' ';
 headerlinesIn = 1;
