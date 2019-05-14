@@ -128,7 +128,7 @@ void Problem3::B ()
     cout << "=====================" << endl;
     cout << "Running Problem 3 (B)" << endl;
     cout << "=====================" << endl;
-    int N = 3  ;
+    int N = 64  ;
     double a = 0, b = 1;
 //    double h = (b - a) / N;
     StokesPDE stokesPde;
@@ -140,10 +140,10 @@ void Problem3::B ()
     SparseMatrix<double> C = stokesPde.createC(A, Bx, By, Z, ZN);   // creates By 2x(N-1) + (N) X 2x(N-1) + (N)
 //    cout<<A<<endl;
 //    cout<<Z<<endl;
-    cout<<C<<endl;
+//    cout<<C<<endl;
 //    cout<<stokesPde.createBy(N)<<endl;
     VectorXd Fu = stokesPde.createBU(gB, N, a, b); //Creating F_u gB=function based on boundary y=1
-    cout<<"Fu: "<<Fu<<endl;
+//    cout<<"Fu: "<<Fu<<endl;
     VectorXd Fv = VectorXd::Zero((N - 1) * (N - 1));
     VectorXd Fp = VectorXd::Zero(N * N);
     VectorXd F = stokesPde.createF(Fu, Fv, Fp);
@@ -155,9 +155,9 @@ void Problem3::B ()
     cout << "Time Taken to Solve for N: " << N << " is :" << elapsed_secs << endl;
 //    cout<<U<<endl;
     Utility utility;
-    utility.writeToFile("PRB3BMATRIXC",C,0);
-    utility.writeToFile("PRB3BMATRIXF",F,0);
-    utility.writeToFile("PRB3BVECTORU",U,0);
+//    utility.writeToFile("PRB3BMATRIXC",C,0);
+//    utility.writeToFile("PRB3BMATRIXF",F,0);
+//    utility.writeToFile("PRB3BVECTORU",U,0);
     VectorXd nodePoint = VectorXd::LinSpaced(N + 1, 0, 1);
     MatrixXd matU = MatrixXd::Zero(N + 1, N + 1);
     for (int i = 0; i < N + 1; ++i)       //column
@@ -174,7 +174,11 @@ void Problem3::B ()
             }
         }
     }
+    begin=clock();
     utility.writeToFile("PRB3BMATRIXU", matU, 0);
+    end=clock();
+    elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    cout << "Time Taken to Write Matrix U for N: " << N << " is :" << elapsed_secs << endl;
     MatrixXd matV = MatrixXd::Zero(N + 1, N + 1);
     for (int i = 0; i < N + 1; ++i)       //column
     {
@@ -190,7 +194,11 @@ void Problem3::B ()
             }
         }
     }
+    begin=clock();
     utility.writeToFile("PRB3BMATRIXV", matV, 0);
+    end=clock();
+    elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    cout << "Time Taken to Write Matrix V for N: " << N << " is :" << elapsed_secs << endl;
 }
 
 VectorXd Problem3::findBigU (SparseMatrix<double> SpA, VectorXd F)

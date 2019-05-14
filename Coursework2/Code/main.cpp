@@ -24,15 +24,15 @@ int main ()
 //    runProblem1d();
 //    runProblem1e();
 //    runProblem1f();
-    Problem2 problem2;
+//    Problem2 problem2;
 //    problem2.ARungeKutta2();
 //    problem2.AImplicitMidpoint();
-    problem2.BRungeKutta2();
-    problem2.BImplicitMidpoint();
-    problem2.CImplicitMidpoint();
-//    Problem3 problem3;
+//    problem2.BRungeKutta2();
+//    problem2.BImplicitMidpoint();
+//    problem2.CImplicitMidpoint();
+    Problem3 problem3;
 //    problem3.A();
-//    problem3.B();
+    problem3.B();
     return 0;
 }
 
