@@ -90,12 +90,12 @@ vector<T> operator- (const vector<T> &lhs, const vector<T> &rhs)
 }
 
 template<typename T>
-T findByValue(const map<T,T> &m,T &value)
+T findByValue(const map<T,vector<T>> &m,T &value)
 {
     T result;
     for (auto it=m.begin(); it!=m.end(); ++it)
     {
-        if(abs(it->second)>=value)
+        if(abs(it->second[1])>=value)
         {
             result = it->first;
             break;

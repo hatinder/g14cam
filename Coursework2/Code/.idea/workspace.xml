@@ -12,10 +12,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96d4c954-2e90-43ce-8eb7-891fdea22274" name="Default Changelist" comment="Updates for CW2 - Problem 2 completed. I think.">
+    <list default="true" id="96d4c954-2e90-43ce-8eb7-891fdea22274" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Problem3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Problem3.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ODE.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ODE.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ODE.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ODE.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Problem2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Problem2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Problem2.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Problem2.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/helper.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Matlab/PRB2BHMTSECOND.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Matlab/PRB2BHMTSECOND.m" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -34,8 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1815">
-              <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+            <state relative-caret-position="252">
+              <caret line="30" column="30" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="30" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -43,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Problem3.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="200" column="41" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
+            <state relative-caret-position="4032">
+              <caret line="192" column="62" selection-start-line="192" selection-start-column="62" selection-end-line="192" selection-end-column="62" />
               <folding>
                 <element signature="e#43#59#0" expanded="true" />
               </folding>
@@ -70,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helper.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1617">
-              <caret line="77" selection-start-line="77" selection-end-line="77" />
+            <state relative-caret-position="417">
+              <caret line="103" column="18" lean-forward="true" selection-start-line="103" selection-start-column="18" selection-end-line="103" selection-end-column="18" />
               <folding>
                 <element signature="e#93#110#0" expanded="true" />
               </folding>
@@ -82,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Problem2.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3717">
-              <caret line="177" column="72" selection-start-line="177" selection-start-column="72" selection-end-line="177" selection-end-column="72" />
+            <state relative-caret-position="396">
+              <caret line="237" column="56" selection-start-line="237" selection-start-column="48" selection-end-line="237" selection-end-column="56" />
               <folding>
                 <element signature="e#44#67#0" expanded="true" />
               </folding>
@@ -94,7 +99,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Utility.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2940">
+            <state relative-caret-position="518">
               <caret line="140" column="1" selection-start-line="140" selection-start-column="1" selection-end-line="140" selection-end-column="1" />
               <folding>
                 <element signature="e#44#63#0" expanded="true" />
@@ -106,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ODE.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="23" column="57" selection-start-line="23" selection-start-column="57" selection-end-line="23" selection-end-column="57" />
+            <state relative-caret-position="546">
+              <caret line="26" column="19" lean-forward="true" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
               <folding>
                 <element signature="e#87#104#0" expanded="true" />
               </folding>
@@ -115,11 +120,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ODE.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1638">
-              <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
+            <state relative-caret-position="496">
+              <caret line="132" column="39" lean-forward="true" selection-start-line="132" selection-start-column="39" selection-end-line="132" selection-end-column="39" />
               <folding>
                 <element signature="e#44#60#0" expanded="true" />
               </folding>
@@ -130,8 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Problem2.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="18" column="21" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="21" />
+            <state relative-caret-position="441">
+              <caret line="21" column="75" selection-start-line="21" selection-start-column="75" selection-end-line="21" selection-end-column="75" />
               <folding>
                 <element signature="e#97#116#0" expanded="true" />
               </folding>
@@ -164,20 +169,20 @@
         <option value="$PROJECT_DIR$/IGaussQuadrature.hpp" />
         <option value="$PROJECT_DIR$/GaussQuadrature.cpp" />
         <option value="$PROJECT_DIR$/RungeKutta2.hpp" />
-        <option value="$PROJECT_DIR$/Problem2.hpp" />
-        <option value="$PROJECT_DIR$/ODE.cpp" />
-        <option value="$PROJECT_DIR$/ODE.hpp" />
         <option value="$PROJECT_DIR$/Utility.hpp" />
         <option value="$PROJECT_DIR$/IUtility.hpp" />
         <option value="$PROJECT_DIR$/Utility.cpp" />
-        <option value="$PROJECT_DIR$/Problem2.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/helper.hpp" />
         <option value="$PROJECT_DIR$/StokesPDE.hpp" />
         <option value="$PROJECT_DIR$/StokesPDE.cpp" />
         <option value="$PROJECT_DIR$/Problem3.hpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/Problem3.cpp" />
+        <option value="$PROJECT_DIR$/ODE.hpp" />
+        <option value="$PROJECT_DIR$/Problem2.hpp" />
+        <option value="$PROJECT_DIR$/Problem2.cpp" />
+        <option value="$PROJECT_DIR$/helper.hpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/ODE.cpp" />
       </list>
     </option>
   </component>
@@ -192,7 +197,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -204,6 +208,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -261,7 +266,9 @@
       <workItem from="1556465936796" duration="29783000" />
       <workItem from="1556630183187" duration="42000" />
       <workItem from="1556636781125" duration="2305000" />
-      <workItem from="1557819177818" duration="1595000" />
+      <workItem from="1557819177818" duration="1820000" />
+      <workItem from="1557909437932" duration="68000" />
+      <workItem from="1557909913818" duration="7998000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Course work 2">
       <created>1555089500588</created>
@@ -319,25 +326,41 @@
       <option name="project" value="LOCAL" />
       <updated>1556482429891</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Updates for CW2 - Problem 3B commented printout of matrices.">
+      <created>1557821324217</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1557821324217</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="202031000" />
+    <option name="totallyTimeSpent" value="210322000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.59210527" visible="true" weight="0.18210863" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.59210527" visible="true" weight="0.18530351" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3296582" />
       <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946752" visible="true" weight="0.32779622" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39911798" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3986711" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32890365" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005325" side_tool="true" weight="0.3296582" />
@@ -348,7 +371,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Structure" order="3" sideWeight="0.40789473" weight="0.185836" />
+      <window_info anchor="right" id="Structure" order="3" sideWeight="0.40789473" visible="true" weight="0.185836" />
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="make" order="6" />
@@ -437,7 +460,8 @@
     <MESSAGE value="Updates for CW2 - Problem 2 completed." />
     <MESSAGE value="Updates for CW2 - Problem 3a completed." />
     <MESSAGE value="Updates for CW2 - Problem 3b completed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates for CW2 - Problem 3b completed." />
+    <MESSAGE value="Updates for CW2 - Problem 3B commented printout of matrices." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates for CW2 - Problem 3B commented printout of matrices." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -470,7 +494,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Problem2.cpp</url>
-          <line>48</line>
+          <line>72</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -492,6 +516,11 @@
           <url>file://$PROJECT_DIR$/Problem3.cpp</url>
           <line>109</line>
           <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/ODE.cpp</url>
+          <line>203</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -644,72 +673,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Problem3.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4032">
+          <caret line="192" column="62" selection-start-line="192" selection-start-column="62" selection-end-line="192" selection-end-column="62" />
+          <folding>
+            <element signature="e#43#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GaussQuadrature.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="651">
           <caret line="31" selection-start-line="30" selection-end-line="31" />
           <folding>
             <element signature="e#112#143#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/helper.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1617">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-          <folding>
-            <element signature="e#93#110#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Problem2.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3717">
-          <caret line="177" column="72" selection-start-line="177" selection-start-column="72" selection-end-line="177" selection-end-column="72" />
-          <folding>
-            <element signature="e#44#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utility.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2940">
-          <caret line="140" column="1" selection-start-line="140" selection-start-column="1" selection-end-line="140" selection-end-column="1" />
-          <folding>
-            <element signature="e#44#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ODE.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="23" column="57" selection-start-line="23" selection-start-column="57" selection-end-line="23" selection-end-column="57" />
-          <folding>
-            <element signature="e#87#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ODE.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1638">
-          <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
-          <folding>
-            <element signature="e#44#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Problem2.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="21" />
-          <folding>
-            <element signature="e#97#116#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -724,22 +703,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Utility.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="140" column="1" selection-start-line="140" selection-start-column="1" selection-end-line="140" selection-end-column="1" />
+          <folding>
+            <element signature="e#44#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ODE.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="26" column="19" lean-forward="true" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+          <folding>
+            <element signature="e#87#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Problem2.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="75" selection-start-line="21" selection-start-column="75" selection-end-line="21" selection-end-column="75" />
+          <folding>
+            <element signature="e#97#116#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="103" column="18" lean-forward="true" selection-start-line="103" selection-start-column="18" selection-end-line="103" selection-end-column="18" />
+          <folding>
+            <element signature="e#93#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1815">
-          <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        <state relative-caret-position="252">
+          <caret line="30" column="30" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="30" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Problem3.cpp">
+    <entry file="file://$PROJECT_DIR$/Problem2.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="237" column="56" selection-start-line="237" selection-start-column="48" selection-end-line="237" selection-end-column="56" />
+          <folding>
+            <element signature="e#44#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ODE.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="496">
-          <caret line="200" column="41" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
+          <caret line="132" column="39" lean-forward="true" selection-start-line="132" selection-start-column="39" selection-end-line="132" selection-end-column="39" />
           <folding>
-            <element signature="e#43#59#0" expanded="true" />
+            <element signature="e#44#60#0" expanded="true" />
           </folding>
         </state>
       </provider>

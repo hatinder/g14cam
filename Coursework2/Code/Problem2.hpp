@@ -19,7 +19,7 @@ public:
     void BRungeKutta2 ();
     void BImplicitMidpoint();
     void CImplicitMidpoint ();
-    map<double, double> computeHamilton (vector<map<double, double>> yVector, double T, double N);
+    map<double, double> computeHamilton (map<double,vector<double>> yVector);
 
 };
 

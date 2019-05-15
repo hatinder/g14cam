@@ -196,3 +196,36 @@ ODE::applyRungeKutta2 (vector<double, allocator<double>> (*F) (double, double, d
     return keyValuePair;
 }
 */
+
+
+map<double,vector<double>>
+ODE::applyIMP (vector<double> (*F) (double, vector<double>), vector<double> initVal, double T, double N)
+{
+    map<double,vector<double>> keyTnValueYnPair;    //t_n and y_n key value pairs as return type for u and v
+    double dt = T / N;
+    double t0 = 0.0;
+    double Dr=2.0;  // double data type for operator overload
+    vector<double> yVal=initVal;
+    keyTnValueYnPair[t0] = yVal;
+    for (int i = 0; i < N; ++i)
+    {
+        yVal=initVal + dt*F(t0+dt/Dr,(yVal+initVal)/Dr);
+        double TOL = pow(10, -12), tolerance = 1.0;
+        int j = 0;
+        for (; j < 100 && tolerance > TOL; ++j)
+        {
+            vector<double> yNext=initVal + dt*F(t0+dt/Dr,(yVal+initVal)/Dr);
+            tolerance=l2_norm(yNext-yVal);
+            yVal=yNext;
+        }
+        if(j==100)
+        {
+            cout<<"Warning: Problem Converging!!"<<endl;
+            cout<<"Iteration: "<<j<<" , T:"<<T<<" , N: "<<N<<endl;
+        }
+        t0 += dt;
+        keyTnValueYnPair[t0] = yVal;
+        initVal=yVal;
+    }
+    return keyTnValueYnPair;
+}
