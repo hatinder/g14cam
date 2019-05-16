@@ -66,7 +66,7 @@ void Problem3::A ()
     cout << "Running Problem 3 (A)" << endl;
     cout << "=====================" << endl;
     vector<string> colNames = {"N", "ERROR"};
-    vector<int> N = {16, 32, 64, 128}; //,256,512};
+    vector<int> N = {16, 32, 64, 128 , 256, 512,1024};
     vector<double> error(N.size(), 0.0);
     double a = 0, b = 1;
     Utility utility;
@@ -75,18 +75,19 @@ void Problem3::A ()
     for (unsigned k = 0; k < N.size(); ++k)
     {
         cout << "Running for N: " << N[k] << endl;
-        begin = clock();
         VectorXd nodePoint = VectorXd::LinSpaced(N[k] + 1, 0, 1);
-        SparseMatrix<double> SpA = sPDE.createA(N[k]);
+        SparseMatrix<double> SpA = sPDE.createANew(N[k]);
         VectorXd F = sPDE.createB(fA, gA, N[k], a, b);
+        begin = clock();
         VectorXd uHat = findU(SpA, F);
+        end = clock();
+        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+        cout << "Time Taken to find U for N: " << N[k] << " is :" << elapsed_secs << endl;
         MatrixXd Z = MatrixXd::Zero(N[k] + 1, N[k] + 1);
         for (int i = 0; i < N[k] + 1; ++i)       //column
         {
             for (int j = 0; j < N[k] + 1; ++j)       //row
             {
-//            cout<<"i*h: "<<nodePoint(i)<<" , j*h: "<<nodePoint(j)<<endl;
-//            cout<<"i*(N-1)+j: "<<(i-1)*(N-1)+(j-1)<<endl;
                 if (i == 0 || i == N[k] || j == 0 || j == N[k])
                 {
                     Z(j, i) = gA(nodePoint(i), nodePoint(j));
@@ -96,11 +97,7 @@ void Problem3::A ()
                     Z(j, i) = uHat[(i - 1) * (N[k] - 1) + (j - 1)];
                 }
             }
-//        cout<<"Z"<<endl<<Z<<endl;
         }
-        end = clock();
-        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-        cout << "Time Taken for N: " << N[k] << " is :" << elapsed_secs << endl;
         utility.writeToFile("VECTOR", nodePoint, N[k]);
         utility.writeToFile("MATRIX", Z, N[k]);
         VectorXd uOrig = VectorXd::Zero((N[k] - 1) * (N[k] - 1));

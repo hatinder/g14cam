@@ -4,11 +4,15 @@
 
 #include "StokesPDE.hpp"
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
-SparseMatrix<double> StokesPDE::createA (int N)
+
+SparseMatrix<double> StokesPDE::createA(int N)
 {
+    clock_t begin, end;
+    begin = clock();
     int n = N - 1;
     SparseMatrix<double> A(n * n, n * n);
     for (int i = 0; i < n; i++)
@@ -34,12 +38,48 @@ SparseMatrix<double> StokesPDE::createA (int N)
             }
         }
 //        cout<<"i: "<<i<<"j: "<<n-1<<endl;
-//        cout<<A<<endl;
     }
+//    cout << A << endl;
+    end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    cout << "Time Taken to createA for N : " << N << " is :" << elapsed_secs << endl;
     return A;
 }
 
-VectorXd StokesPDE::createB (double (*f) (double, double), double (*g) (double, double), int N, double a, double b)
+SparseMatrix<double> StokesPDE::createANew(int N)
+{
+    clock_t begin, end;
+    begin = clock();
+    int n = N - 1;
+    vector<Triplet<double>> trpA;
+    for (int i = 0; i < n * n; i++)
+    {
+        trpA.push_back(Triplet<double>(i, i, 4));
+        if ((i < (n * n - 1)) && ((i+1) % n != 0))
+        {
+            trpA.push_back(Triplet<double>(i, i + 1, -1));
+            trpA.push_back(Triplet<double>(i + 1, i, -1));
+        }
+        if (i < (n * n - n))
+        {
+            trpA.push_back(Triplet<double>(i, i + n, -1));
+            trpA.push_back(Triplet<double>(i + n, i, -1));
+        }
+    }
+    SparseMatrix<double> A(n * n, n * n);
+    A.setFromTriplets(trpA.begin(), trpA.end());
+
+// Set First Column  i.e. K , I, Z
+
+//    cout << A << endl;
+//    cout<<I<<endl;
+    end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    cout << "Time Taken to createA for N : " << N << " is :" << elapsed_secs << endl;
+    return A;
+}
+
+VectorXd StokesPDE::createB(double (*f)(double, double), double (*g)(double, double), int N, double a, double b)
 {
     int n = N - 1;
     double h = (b - a) / (double) N;
@@ -58,39 +98,32 @@ VectorXd StokesPDE::createB (double (*f) (double, double), double (*g) (double, 
                 if (j == 0)
                 {
                     u = g(a + (i + 1) * h, a + j * h) + g(a + i * h, a + (j + 1) * h);
-                }
-                else if (j == (n - 1))
+                } else if (j == (n - 1))
                 {
                     u = g(a + i * h, a + (j + 1) * h) + g(a + (i + 1) * h, a + (j + 2) * h);
-                }
-                else
+                } else
                 {
                     u = g(a + i * h, a + (j + 1) * h);
                 }
-            }
-            else if (i == (n - 1))        //Right Boundary Top + Bottom Outer
+            } else if (i == (n - 1))        //Right Boundary Top + Bottom Outer
             {
                 if (j == 0)
                 {
                     u = g(a + (i + 1) * h, a + j * h) + g(a + (i + 2) * h, a + (j + 1) * h);
-                }
-                else if (j == (n - 1))
+                } else if (j == (n - 1))
                 {
                     u = g(a + (i + 2) * h, a + (j + 1) * h) + g(a + (i + 1) * h, a + (j + 2) * h);
-                }
-                else
+                } else
                 {
                     u = g(a + (i + 2) * h, a + (j + 1) * h);
                 }
-            }
-            else if (j == 0)        //Bottom Internal
+            } else if (j == 0)        //Bottom Internal
             {
                 if (i > 0 or i < (n - 1))
                 {
                     u = g(a + (i + 1) * h, a + j * h);
                 }
-            }
-            else if (j == (n - 1))    //Top Internal
+            } else if (j == (n - 1))    //Top Internal
             {
                 if (i > 0 or i < (n - 1))
                 {
@@ -104,7 +137,7 @@ VectorXd StokesPDE::createB (double (*f) (double, double), double (*g) (double, 
     return v;
 }
 
-SparseMatrix<double> StokesPDE::createBx (int N)
+SparseMatrix<double> StokesPDE::createBx(int N)
 {
     int n = N - 1;
     SparseMatrix<double> Bx(n * n, N * N);
@@ -127,7 +160,7 @@ SparseMatrix<double> StokesPDE::createBx (int N)
 
 }
 
-SparseMatrix<double> StokesPDE::createBy (int N)
+SparseMatrix<double> StokesPDE::createBy(int N)
 {
     int n = N - 1;
     SparseMatrix<double> By(n * n, N * N);
@@ -149,7 +182,7 @@ SparseMatrix<double> StokesPDE::createBy (int N)
     return By;
 }
 
-SparseMatrix<double> StokesPDE::createZ (int N)
+SparseMatrix<double> StokesPDE::createZ(int N)
 {
     int n = N - 1;
     SparseMatrix<double> A(n * n, n * n);
@@ -157,8 +190,8 @@ SparseMatrix<double> StokesPDE::createZ (int N)
 }
 
 SparseMatrix<double>
-StokesPDE::createC (SparseMatrix<double> A, SparseMatrix<double> Bx, SparseMatrix<double> By, SparseMatrix<double> Z,
-                    SparseMatrix<double> ZN)
+StokesPDE::createC(SparseMatrix<double> A, SparseMatrix<double> Bx, SparseMatrix<double> By, SparseMatrix<double> Z,
+                   SparseMatrix<double> ZN)
 {
     SparseMatrix<double> BxT = Bx.transpose();
     SparseMatrix<double> ByT = By.transpose();
@@ -226,20 +259,20 @@ StokesPDE::createC (SparseMatrix<double> A, SparseMatrix<double> Bx, SparseMatri
     return C;
 }
 
-SparseMatrix<double> StokesPDE::createZN (int N)
+SparseMatrix<double> StokesPDE::createZN(int N)
 {
     SparseMatrix<double> ZN(N * N, N * N);
     return ZN;
 }
 
-VectorXd StokesPDE::createF (VectorXd Fu, VectorXd Fv, VectorXd Fp)
+VectorXd StokesPDE::createF(VectorXd Fu, VectorXd Fv, VectorXd Fp)
 {
     VectorXd F(Fu.size() + Fv.size() + Fp.size());
     F << Fu, Fv, Fp;
     return F;
 }
 
-VectorXd StokesPDE::createBU (double (*g) (double, double), int N, double a, double b)
+VectorXd StokesPDE::createBU(double (*g)(double, double), int N, double a, double b)
 {
     int n = N - 1;
     double h = (b - a) / (double) N;
@@ -258,39 +291,32 @@ VectorXd StokesPDE::createBU (double (*g) (double, double), int N, double a, dou
                 if (j == 0)
                 {
                     u = g(a + (i + 1) * h, a + j * h) + g(a + i * h, a + (j + 1) * h);
-                }
-                else if (j == (n - 1))
+                } else if (j == (n - 1))
                 {
                     u = g(a + i * h, a + (j + 1) * h) + g(a + (i + 1) * h, a + (j + 2) * h);
-                }
-                else
+                } else
                 {
                     u = g(a + i * h, a + (j + 1) * h);
                 }
-            }
-            else if (i == (n - 1))        //Right Boundary Top + Bottom Outer
+            } else if (i == (n - 1))        //Right Boundary Top + Bottom Outer
             {
                 if (j == 0)
                 {
                     u = g(a + (i + 1) * h, a + j * h) + g(a + (i + 2) * h, a + (j + 1) * h);
-                }
-                else if (j == (n - 1))
+                } else if (j == (n - 1))
                 {
                     u = g(a + (i + 2) * h, a + (j + 1) * h) + g(a + (i + 1) * h, a + (j + 2) * h);
-                }
-                else
+                } else
                 {
                     u = g(a + (i + 2) * h, a + (j + 1) * h);
                 }
-            }
-            else if (j == 0)        //Bottom Internal
+            } else if (j == 0)        //Bottom Internal
             {
                 if (i > 0 or i < (n - 1))
                 {
                     u = g(a + (i + 1) * h, a + j * h);
                 }
-            }
-            else if (j == (n - 1))    //Top Internal
+            } else if (j == (n - 1))    //Top Internal
             {
                 if (i > 0 or i < (n - 1))
                 {

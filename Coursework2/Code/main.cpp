@@ -5,6 +5,7 @@
 #include "helper.hpp"
 #include "Problem2.hpp"
 #include "Problem3.hpp"
+#include "StokesPDE.hpp"
 
 using namespace std;
 
@@ -24,15 +25,21 @@ int main ()
 //    runProblem1d();
 //    runProblem1e();
 //    runProblem1f();
-    Problem2 problem2;
+//    Problem2 problem2;
 //    problem2.ARungeKutta2();
 //    problem2.AImplicitMidpoint();
-    problem2.BRungeKutta2();
-    problem2.BImplicitMidpoint();
+//    problem2.BRungeKutta2();
+//    problem2.BImplicitMidpoint();
 //    problem2.CImplicitMidpoint();
-//    Problem3 problem3;
-//    problem3.A();
+    Problem3 problem3;
+    problem3.A();
 //    problem3.B();
+//    StokesPDE stokesPde;
+//    int n=64;
+//    SparseMatrix<double> A1=stokesPde.createA(n);
+//    SparseMatrix<double> A2=stokesPde.createANew(n);
+//    double result=(A1-A2).norm();
+//    cout<<"NORM: "<<result<<endl;
     return 0;
 }
 
